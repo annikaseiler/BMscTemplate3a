@@ -31,18 +31,24 @@
 \renewcommand{\headrulewidth}{0.5pt}
 
 % introduction
+\newpage
 \thispagestyle{plain}
 \input{content/introduction.tex}
 
 % theory
-\pageshift
+\newpage
 \thispagestyle{plain}
 \input{content/theory.tex}
+
+% theory
+\newpage
+\thispagestyle{plain}
+\input{content/results.tex}
 
 % other sections go here
 
 % conclusion
-\pageshift
+\newpage
 \thispagestyle{plain}
 \input{content/conclusion.tex}
 
@@ -58,26 +64,25 @@
 
 % bibliography
 \linespread{1.0}\selectfont
-\pageshift
+\newpage
 \thispagestyle{plain}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\refname}{Bibliography}
 \phantomsection
 \addcontentsline{toc}{section}{Bibliography}
-\bibliography{bib/bib}
+% Add additional bib files here in the command below, lack of comma is important
+\bibliography{bib/experimental}
+
 
 % finalize thesis content
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead{}
 \fancyfoot{}
 
-% thesis statement
-\pageshift
-\thispagestyle{empty}
-\input{content/statement.tex}
-
 % acknowledgment
-\pageshift
+\newpage
 \thispagestyle{empty}
 \selectlanguage{ngerman}
 \input{content/acknowledgment.tex}
+
+\includepdf[pages=-]{documents/Eid_Versicherung.pdf}
