@@ -1176,16 +1176,16 @@ FUNCTION {phdthesis}
   link.open
   format.btitle "title" output.check
   link.shut
-  new.block
+  %new.block
   "PhD thesis" format.thesis.type output.nonnull
   school "school" output.check
   address output
   format.date "year" output.check
-  new.block
+  %new.block
   format.eprint output
-  new.block
+  %new.block
   note output
-  new.sentence
+  %new.sentence
   format.doi output
   new.sentence
   format.SLACcitation output

@@ -17,5 +17,3 @@ Based on work by Marcel Rieger: https://gitlab.cern.ch/aachen-3a-cms/thesis-temp
 - Briefly mention how to get references from inspire
 
 - Check if "website" and "software" can be cited correctly
-
-- Why does phdthesis not work even though it is defined in cms_unsrt.bst? Unclear to JLS.
