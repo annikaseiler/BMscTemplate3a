@@ -106,6 +106,7 @@ ENTRY
     report
     collaboration
     SLACcitation
+    reportNumber
   }
   {}
   { label  extra.label sort.label short.list }
@@ -520,20 +521,11 @@ FUNCTION {format.date}
 
 FUNCTION {format.date.paren}
 { year empty$
-    { month empty$
-    { "" }
-    { "there's a month but no year in " cite$ * warning$
-      month
-    }
-      if$
-    }
-    { month empty$
-    {"(" year * ")" *}
-    {"(" month * ", " * year * ")" *}
-      if$
-    }
+    { "" }    % If the year is empty, output nothing
+    { "(" year * ")" * }  % Always output only the year in parentheses
   if$
 }
+
 
 FUNCTION {format.collaboration}
 { collaboration empty$
@@ -882,7 +874,9 @@ FUNCTION {article}
   blank.sep
   crossref missing$
     {  journal missing$
-       {}
+       {
+        format.date "year" output.check % Output year right after title if no journal
+       }
        { journal emphasize "journal" output.check
          blank.sep
          format.volume output
@@ -929,23 +923,30 @@ FUNCTION {book}
   format.btitle "title" output.check
   crossref missing$
     { format.bvolume output
-      new.block
+      %new.block
       format.number.series output
-      new.sentence
+      %new.sentence
+      %new.block
       publisher "publisher" output.check
+      blank.sep
+      format.date.paren "year"  output.check % In Parentheses so it is more aligned with the style for an article
+      % Commented out below
       address output
     }
-    { new.block
+    { %new.block
       format.book.crossref output.nonnull
     }
   if$
   format.edition output
-  format.date "year" output.check
-  new.block
+  %format.date "year" output.check
+  %new.block
+  blank.sep
   note output
-  new.sentence
+  %new.sentence
+  blank.sep
   format.doi output
-  format.isbn output
+  % isbn is usually not needed if there is a doi?
+  %format.isbn output
   format.SLACcitation output
   fin.entry
 }
@@ -1230,19 +1231,20 @@ FUNCTION {techreport}
       format.collaboration output
    }
   if$
-  link.open
   format.title "title" output.check
-  link.shut
   blank.sep
-  format.tr.number output.nonnull
-  institution output
-  address output
+  %format.tr.number output.nonnull
+  %institution output
+  %address output
   format.date "year" output.check
-  new.block
-  new.sentence
-  format.doi output
-  format.eprint output
+  %new.block
+  %new.sentence
+  %format.doi output
+  %format.eprint output
   note output
+  link.open
+  reportNumber output
+  link.shut
   fin.entry
 }
 
