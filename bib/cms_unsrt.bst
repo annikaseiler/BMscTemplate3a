@@ -915,8 +915,8 @@ FUNCTION {book}
     { format.editors "author and editor" output.check }
     { format.authors output.nonnull
       crossref missing$
-    { "author and editor" editor either.or.check }
-    'skip$
+        { "author and editor" editor either.or.check }
+        'skip$
       if$
     }
   if$
@@ -928,8 +928,7 @@ FUNCTION {book}
       %new.sentence
       %new.block
       publisher "publisher" output.check
-      blank.sep
-      format.date.paren "year"  output.check % In Parentheses so it is more aligned with the style for an article
+      format.date "year" output.check
       % Commented out below
       address output
     }
@@ -940,13 +939,13 @@ FUNCTION {book}
   format.edition output
   %format.date "year" output.check
   %new.block
-  blank.sep
+  blank.sep % Commenting this out introduces another comma and I do not understand why.
+  ", " *    % Add comma and space before DOI, no clue what the * does but if you do not have it, you get one extra space...
   note output
   %new.sentence
   blank.sep
-  format.doi output
-  % isbn is usually not needed if there is a doi?
-  %format.isbn output
+  format.doi output.nonnull
+  new.sentence
   format.SLACcitation output
   fin.entry
 }
@@ -1146,7 +1145,7 @@ FUNCTION {misc}
 { output.bibitem
   format.collaboration output
   format.authors output
-  link.open
+  %link.open
   title empty$
     { howpublished new.sentence.checka }
     { howpublished empty$ not
@@ -1158,14 +1157,14 @@ FUNCTION {misc}
       blank.sep
     }
   if$
-  link.shut
+  %link.shut
   howpublished output
   format.date output
-  new.block
-  note output
-  new.sentence
+  %new.block
+  %new.sentence
   format.doi output
   format.url output
+  note output
   fin.entry
   empty.misc.check
 }
@@ -1242,9 +1241,10 @@ FUNCTION {techreport}
   %format.doi output
   %format.eprint output
   note output
-  link.open
   reportNumber output
-  link.shut
+  %link.open
+  url output
+  %link.shut
   fin.entry
 }
 
