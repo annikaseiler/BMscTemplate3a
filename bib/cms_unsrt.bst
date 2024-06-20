@@ -1141,6 +1141,25 @@ FUNCTION {mastersthesis}
   fin.entry
 }
 
+FUNCTION {format.bachelorsthesis.type}
+{ "Bachelor's Thesis" }
+
+FUNCTION {bachelorsthesis}
+{ output.bibitem
+  format.authors "author" output.check
+  link.open
+  format.title "title" output.check
+  link.shut
+  blank.sep
+  format.bachelorsthesis.type output.nonnull
+  school "school" output.check
+  address output
+  format.date "year" output.check
+  new.block
+  note output
+  fin.entry
+}
+
 FUNCTION {misc}
 { output.bibitem
   format.collaboration output
