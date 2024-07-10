@@ -14,8 +14,8 @@
 
 % contents page
 \newpage
-\pagenumbering{Roman}
-\setcounter{page}{1}
+%\pagenumbering{Roman}
+%\setcounter{page}{1}
 \thispagestyle{fancy}
 \fancyhead{}
 \fancyfoot{}
@@ -27,8 +27,6 @@
 
 % begin thesis content
 %\pageshift
-\pagenumbering{arabic}
-\setcounter{page}{1}
 \linespread{\textlinespread}\selectfont
 \fancyfoot[RO,LE]{\slshape{\thepage}}
 \fancyhead[LE]{\slshape{\leftmark}}
@@ -37,6 +35,8 @@
 
 % introduction
 \newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
 \thispagestyle{plain}
 \input{content/introduction.tex}
 
