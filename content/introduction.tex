@@ -1,4 +1,23 @@
 \Section{Introduction}
 \label{sec:introduction}
 
-Todo.
+Since the discovery of the Higgs boson in 2012 there has been a pronounced interest in understanding the
+phenomenology of the new particle and especially the Brout-Englert-Higgs mechanism. One of the parameters
+that determines the shape of Higg's potential is the triliniear self-coupling of the Higgs boson $\lambda_{HHH}$,
+which is directly accessible via di-Higgs production~\cite{CMS:2021qbp, HandbookLHC}. Of particular interest is the fact that beyond standardmodel theories (BSM) 
+predict very different di-Higgs behaviour, some of which differ markedly from predictions of the standardmodel (SM).
+Contributions from BSM effects may significantly increase di-Higgs production and influence the di-Higgs phenomenology, so providing BSM benchmarks
+through studying di-Higgs physics can vastly increase our understanding of the Brout-Englert-Higgs mechanism~\cite{HandbookLHC}. \\
+
+The $HH \rightarrow b \bar{b} \gamma \gamma$ is one of the most sensitive decay channels of di-Higgs, since the decay of one Higgs boson
+to two Bottom-Quarks has a large branching fraction and the two photons produced by the second Higgs boson can be detected with a good mass resolution.
+Furthermore in this decay channel there occur comparatively few background processes~\cite{CMS:2021qbp}, which makes it easier to distinguish the signal from the backgrounds.
+Nevertheless the signal background classification
+is a challenging task, since the interplay of a large number of variables determines whether a signal or a background process is present. Manual differentiation
+would not only be very time-consuming, but also associated with a high error rate. For that reason a signal-background classification using
+deep learning algorithms is presented in this thesis. The classification task is performed by building a multilayer perceptron (MLP), as well as a
+graph neural network (GNN), concretly a graph attention network (GAT). \\
+
+The thesis is structured as followes. First the necessary basics are introduced: In Section \ref{sec:theory} the role of the Higgs boson in the Standardmodel (SM) and HH production
+will be introduced. Also the CMS detector will be explained. In Section \ref{sec:prep} the event selection and variables used to distinguish signal from background will be presented.
+The neural network architectures are depicted in Section \ref{sec:deepl} and in section \ref{sec:results} the results of the signal-background classification using machine learning are presented.

@@ -1,0 +1,145 @@
+\Section{Signal-background classification using machine learning}
+\label{sec:deepl}
+
+\subsection{Multilayer Perceptron}
+\label{sec:funcmlp}
+
+An MLP is the simpliest form of a feedforward neural network and consits of several layers, where each layer consits of a set of nodes. In the first layer each node represents an input feature, the output layer consits of four nodes where each node represents one class of events
+and the layers in between are called hidden layers. The mathematical operation that connects the different layers
+is a matrix multiplication, where the entrys of the matrix are called weights, whose values will be optimized by the nerual network. In order to learn complex
+relations, there needs to be a non-linear operation applied after each layer. Otherwise, there would just be a series of linear operations, which would be nothing else
+than one big linear operation. Common choices for activation functions are the ReLU, ELU oder SeLU activation function. After the last hidden layer a softmax activation function is applied,
+which creates values between 0 and 1 for each class, where all four values add up to 1. The labels are correspondingly one-hot encoded. \\
+
+The performance of a neural network is measured with a loss function, that will be minimized in the learning process. In this thesis the cross-entropy loss, 
+
+\eqn{
+    \mathcal{L} = - \frac{1}{k} \sum_{i=1}^{k} \vec{p}^T(\vec{x}_i) log \vec{q} (\vec{x}_i)
+}
+
+where $k$ is the batch size, $m$ is the number of classes, $\vec{x_i}$ are the data, $\vec{p}$ are the true class labels and $\vec{q}$ are the models predictions.
+The weights of the model then are updatet through backpropagation of the loss: The partial derivative of the loss is calculated with respect of the weight parameters, so the model can learn how to
+vary the weights in order to minimize the loss. Once the weights have been updated a new training epoch is started.
+Eventually the loss will not improve anymore, that is when the optimal weights are found. In addition the performance is checked with the accuracy, which is
+defined as the ratio between the correct classified events and the number of all events. \\
+
+Before the model can be trained the input data need to be prepared. First an a standradization that transformes the data into the same order of magnitude is applied, because the values of the input data vary in wide ranges.
+Second the data is split into a train, validation and test set. The model is trained with the training data set, then after each epoch the model is applied on the validation data to check the models performance on unseen data.
+The validation data set is indirectly involved in the training, because the selected model is the one with the best validation loss and the hyperparameter optimization involves the models performance on the validation data.
+When the training and hyperparameter tuning is complete, the performance of the model is checked with the test data set. Finally the model does not see all the training data at once, instead the training data is splitted into mini batches (short: batch),
+which are transferred to the model one after the other. After each batch the loss is calculated and the weights are then updated through backpropagation. \\
+
+The hyperparameters have a large influence on the model's performance. The learning rate decides, how fast the weights are changed, the schedueler adapts the learning rate throughout the training
+and the the weight decay prevents that the weights are set
+to numerically large numbers. A dropout excludes a certain percentage of random nodes after each layer, to create different network architechtures and finally early stopping can be used, which stops the training process when the validation loss 
+did not improve over a certain number of epochs and prevents overtraining~\cite{DL:2021}. 
+
+% An MLP is the simpliest form of a feedforward neural network and consits of several layers, where each layer consits of a set of nodes.
+% Each input node represents one feature that is used for training, in this thesis this could be for example $p_T$, $\eta$ or $\phi$ of a particle.
+% These first layer is followed by sereval hidden layers, where all the nodes are connected. The mathematical operation that connects the different layers
+% is a matrix multiplication, where the entrys of the matrix are called weights, whose values will be optimized by the nerual network. In order to learn complex
+% relations, there needs to be a non-linear operation applied after each layer. Otherwise, there would just be a series of linear operations, which would be nothing else
+% than one big linear operation. But it is already enough to apply a quite simple non-linear function afer each layer, for example a ReLU function where negative values are
+% set to zero and positive values are passed without changing them. The nodes of the last hidden layers are connected to the output layer, in this thesis every node
+% of the output layer represents a class. To perform a signal background classification, a measure is needded to decide how strongly an event is assigned to each class.
+% to persue this goal a softmax activation function can be applied on the last hidden layer. The result will be a value between 0 and 1 for each class, where all four values add up to 1.
+% Then a threshhold value can be set that decides, how large the output value needs to be to be assigned to a specific class. \\
+
+% The performance of a neural network is measured with a loss function, that will be minimized in the learning process. In this thesis the cross-entropy loss will be used. 
+% The weights then are updatet through the backpropagation. That means that the partial derivative of the loss is calculated with respect of the weight parameters. That way the model can learn how to
+% vary the weights in order to minimize the loss. Once the weighst have been updated a new training epoch is started.
+% Eventually the loss will not improve anymore, that is when the optimal weights are found. In addition the accuracy, which is a measure
+% for the correct classification rate, is also important quantity. It is defined as the ratio between the corect classified events and the number of all events. \\
+
+% An important quantity is the learning rate, which defines how fast the weights are modified. If the learning rate is too small it takes a large amount of epochs until the minimal loss is found, which would be inefficient,
+% or it could happen that a small local minima is falsly identified as the global minima. When the learning rate is too high it can happen that the best loss is never met, because the weights
+% will never reach the optimal values. An efficient way of finding the balance between those two extrema is choosing an adaptive learning rate, that is higher, when the gradients are small and decreases, when the gradients get higher.
+% Finally penalty terms improve the trainig. These terms prevent that the model chooses too large weights, through adding the absolute value of the weights, multiplied by an adjustible parameter, on the loss value. \\
+
+% The data is splitted into three datasets: The training dataset, the validation dataset and the test dataset. The training dataset is again splitted into minibatches,
+% the model only sees one minibatch at a time. For each batch the loss is calculated, and after the model was trained with all the minibatches, the mean of the loss values
+% is the loss for this epoch. After one epoch is complete, the model is trained with the validation dataset and the loss for each epoch is observed again.
+% The validation dataset helps identifying problems in the traiing, for example overfitting. With the help of the validation dataset the hyperparameters can be adjusted, so the validation dataset
+% is indirectly involved in building the model and the validation loss decides which model is the best. Finally, after all the hyperparameters have been set, the test dataset is apllied on the model, its
+% use is to measure the final performance. \\
+
+\subsection{Graph Attention Network}
+\label{sec:funcgat}
+
+A GAT is a more complex neural network that is structured very different from the MLP. Here each node represents an object and each object is described by a set of features. 
+In this theses a fully connected network is used, that means that all nodes are connected, where each connection is called an edge.
+In difference to the MLP, the GAT can learn itself the relations between different objects, so it needs far less input variables in general. \\
+
+For each event there is a different amount of nodes, since the events can have two to six jets and up to four leptons. The features for each node are $p_T$, $\eta$, $\phi$, ID and an index that gives information on the 
+type of the object. Given this set of node and features for each event the attention coefficients $e_{ij}$
+for each edge are constructed: First the node features of node $i$ and $j$ are multilplied with the weight matrix $W$, which delivers the parameters $z$ for both nodes, which are then concatenated
+and multiplied with the shared attention mechanism $a$. $W$ and $a$ are both learnable network parameters~\cite{GAT:2018}.
+
+\eqn{
+    e_{ij} = a (W h_i || W h_j) =  a (z_i || z_j)
+}
+
+After that, a ReLU activation function is applied on the attention coeficients and then a softmax activation function is used to normalize the attention coefficients, that indicate the importance of 
+node j's features to node i. 
+
+\eqn{
+    \alpha_{ij} = softmax_j(ReLU(e_{ij})) = \frac{exp(e_{ij})}{\sum_{k \in N_i}exp(e_{ik})}
+}
+
+After applying another non-linearity $\sigma$ on the product of the normalized attention coefficients and $z$, the output feature for each node can be built by adding up all the neighberhood features.
+
+\eqn{
+    h_i' = \sigma \bigl(\sum_{j \in N_i} \alpha_{ij} W h_j \bigr)
+}
+
+This process is repeated $K$ times, where each repetition is called an head. After $K$ heads the output features are averaged,
+
+\eqn{
+    h_i' = \sigma \bigl( \frac{1}{K} \sum_{k=1}^{K} \sum_{j \in N_i} \alpha_{ij}^{k} W^{k} h_j \bigr)
+}
+
+so the output $h_i'$ of this first GAT layer can be passed to another layer, which is built in the same way~\cite{GAT:2018}. Finally the GAT output is passed to an MLP, which then performs the signal background classification.
+
+\subsection{Hyperparameter Optimization}
+\label{sec:funcgat}
+
+Finding the best hyperparameters is essential for the model's performance. There are different algorithms that aim to persue this goal, in this thesis
+both Bayesian optimization and random search are used. Allowed ranges or values are specified for each hyperparameter, from which the optimization algorithm then selects the best ones.
+Table \ref{tab:5e} lists all the optimized hyperparameters.
+
+\Table{H}{tab:5e}{Hyperparameters for Optimization}{}{c c}{
+    \hline
+    Hyperparameter & Allowed values \\
+    \hline
+    Number of layers & $1, 2, 3, 4, 5$ \\
+    Number of nodes & $128, 256, 512, 1024$ \\
+    Activation function & ReLU, ELU, SeLU \\
+    Learning rate & $[10^{-6}, 10^{-4}]$, logarithmic \\
+    Weight decay & $[10^{-6}, 10^{-4}]$, logarithmic \\
+    Dropout probability & $[0, 0.25]$\\
+    Weight increase & $2, 5, 10, 20, 30$ \\
+    \hline
+}
+
+For variables for which an interval is specified, the algorithm selects floats that are evenly distributed over the entire interval. For variables with the addition
+'logarithmic', equally distributed values are selected via a logarithmic scale, because the given interval varys over a few orders of magnitude. \\
+
+The random search, performed with the Random Sampler, simply selects random combinations of hyperparameters and observes the achieved loss value. This is carried out for a fixed number of trials and after that the
+hyperparameters that caused the lowest loss value are chosen. Previous trials are not taken into account~\cite{hpalg:2011}. \\
+
+The Bayesian optimization is performed with the Tree of Parzen Estimators (TPE Sampler), which is a probability based model for finding the hyperparameters that minimize the loss.
+The TPE sampler applies two Gaussian mixture models (GMM) on the set of hyperparameters $x$ and their corresponding loss value $y$~\cite{hpsearch:2012}, which represent a probability distribution for the best
+loss depending on the hyperparameters. The GMM $l(x)$ is applied on the set of hyperparameters that are expected to minimize the loss the most and $g(x)$ is applied on all the other datasets. 
+
+\[
+p(x|y) =
+\left\{
+\begin{array}{ll}
+    l(x) & \text{if } y < y^* \\
+    g(x)  & \text{if } y \geq y^*
+\end{array}
+\right.
+\]
+
+The loss value $y^*$ is defined in such a way that a fixed percentage $\gamma = p(y < y^*)$ of all value pairs are described with $l(x)$~\cite{hpalg:2011}.
+The optimizer then selects the next set of hyperparameters by maximizing the ratio $l(x)/g(x)$~\cite{hpsearch:2012}. This process is repeated until the loss does not significantly improve anymore.
