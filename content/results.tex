@@ -4,7 +4,106 @@
 \subsection{Results of the Hyperparameter Optimization}
 \label{subsec:perfmlp}
 
+The hyperparameter optimization is performed both with Bayesian optimization and with random search for $50$ trials to compare both algorithms. For each method the history plot, 
+parallel coordinate plot and parameter importanace plot is presented. The history plot shows the loss value achieved for each trial. The red line indicates what loss value yet achieved is best.
+The history plot for Bayesian optimization can be seen in Fig. ???, the one for random search in Fig. ???. For both algorithms it can be seen, that in the first trials the loss value 
+is improved rapidly, but after ??? trials, the value only improves minimally anymore. Comparison what decreases earlier??
+The best loss value for the Bayesian optimization,
 
+\eqn{
+    \mathcal{L} = ???
+}
 
-\subsection{Performance of the neural networks}
+was achieved in trial ???. The lowest loss achieved through random search,
+
+\eqn{
+    \mathcal{L} = 0.8891
+}
+
+was reached in trial $27$. 
+
+The parallel coordinate plot of the Bayesian optimization is shown in Fig. ???, the one for the random search in Fig. ???. The algorithm of the Bayesian is nicely visualized:
+It can be seen, how intervals of hyperparameters, where the loss value is low, are chosen far more often then values, where the loss is higher. Example!!!
+For the random search by contrast such a behaviour can not be observed, hyperparameter combinations with a higher loss seem to be as often tested as combinations with a lower loss.
+
+Finally the importance of different hyperparameters is shown in Fig. ??? for the Bayesian optimization and in Fig. ??? for the random search. The importance is evaluated by changing one
+hyperparameter at a time while observing how much the loss changes. The graphs for the two algorithms do not differ qualitatively: With both methods the learning rate is the most important
+hyperparameter, followed by the dropout probabilty. The other hyperparameters only have a small influence on the performance.
+
+The best hyperparameters for the Bayesian optimization are shown in this Table:
+
+\Table{H}{tab:5e}{Hyperparameters for Optimization}{}{c c}{
+    \hline
+    Hyperparameter & Result \\
+    \hline
+    Number of layers & $1, 2, 3, 4, 5$ \\
+    Number of nodes & $128, 256, 512, 1024$ \\
+    Activation function & ReLU, ELU, SeLU \\
+    Learning rate & $[10^{-6}, 10^{-4}]$, logarithmic \\
+    Weight decay & $[10^{-6}, 10^{-4}]$, logarithmic \\
+    Dropout probability & $[0, 0.25]$\\
+    \hline
+}
+
+These are the best hyperparameters for the random search:
+
+\Table{H}{tab:5e}{Hyperparameters for Optimization}{}{c c}{
+    \hline
+    Hyperparameter & Result \\
+    \hline
+    Number of layers & $4$ \\
+    Number of nodes & $256$ \\
+    Activation function & SELU \\
+    Learning rate & $6.1851 \cdot 10^{-5}$ \\
+    Weight decay & $7.4634  \cdot 10^{-6}$ \\
+    Dropout probability & $0.0881$\\
+    \hline
+}
+
+Since the loss value pf the Bayesian optimization is a bit lower than the one of the random search, these hyperparameters are used to train the MLP.
+
+\subsection{Performance of the Neural Networks}
 \label{subsec:perfgat}
+
+The MLP is trained with the hyperparameters that are presented in the last chapter. The maximum number of epochs is $350$. If the validation loss does not improve $75$ epochs in a row the 
+training is stopped early. The model with the best validation loss is chosen as the best model. In Fig. ??? the training and validation loss can be seen, Fig. ??? shows the training and validation accuracy. It can be seen that around epoch $40$ the performance
+of the MLP suddenly improves: The loss decreases and the accuracy increases rapidly. Explanation !!!
+It is also noticeable that the validation loss is a bit higher than the training loss and that the gap between the curves increases. In general it is normal that a neural network shows a better performance
+on the data that it is trained with than on unseen data, but since both curves still show a decreasing behaviour, there is no sign of overtraining. Also the accuracy of both validation and training alignes,
+which means that the entry of the predicted class is a bit lower for validation data then training data, but it is still high enough to be assigned to the correct class, so the accuracy is not effected.
+After ??? the training is stopped by the early stopping, so the weights from epoch ??? are chosen with this results:
+
+\eqn{
+    \mathcal{L} = \\
+    acc = 
+}
+
+To evaluate the performance of the MLP further the confusion matric and ROC curves are helpful. The ROC-curve shows the True Positive Rate (TPR),
+
+\eqn{
+    TPR = \frac{TP}{TP+FN}
+}
+
+where the ture positives (TP) are the events, that were correctly assigned to the considered class and the false negatives are the events, that were falsly assigned to one of the not-considered classes,
+in dependence of the False Positive Rate(FPR),
+
+\eqn{
+    FPR = \frac{FP}{FP+TN}
+}
+
+where the false positives are events that were falsly assigned to a specific class and the true negatives are the events that were correctly assigned to a not-considered class.
+The threshhold value at which an event is assigned to a specific class is varied between $0$ and $1$ and for each value and class the TPR and FPR are calculated. Then the area under the curve can be estimated,
+which should be $1$ in a perfect classification, because that means, that the TPR equals $1$, so every event is assigned to the correct class. In Fig. ??? the one vs. all ROC curve is presented,
+where all events, that do not belong to the considered class are summarized together. The dashed line represents a random classification, where $50 \%$ of the events would be assigned to the considered
+class. Fig. ??? shows the one vs. one ROC curves for the signal classes vs. each of the background classes, where only the two classes considered
+are taken into account. 
+
+It can be seen that the area under the curve is best for the non-resonant background, 
+
+For the confusion matrix a threshold of $0.5$ is set, which means that if the highest entry
+of the one-hot encoded prediction is larger than $0.5$ the event is assigned to the corresponding class, otherwise it is not assigned to a class at all. The confusion matrix shows
+how many percent of events of each class are actually predicted to that class and how many events are assigned to what other class. The confusion matrix for the MLP can be seen in Fig. ???.
+The plot shows that the non-resonant background could be identified best, followed by the $t \bar{t} H$-background. The model seems to have some difficulty to distinguish
+the two signal events from each other. Since $t \bar{t} H$-events shows a more similar kinematic to signal events than the non-resonant background, as it was described in Sec. ???, it is expected
+that the non-resonant background can best be differntiated by the MLP. To understand why the two signal events are not well differentiated it makes sense to look how the variables used for training
+are distributed for the signal events, that were assigned to the wrong signal-class.
