@@ -8,7 +8,7 @@ An MLP is the simpliest form of a feedforward neural network and consits of seve
 and the layers in between are called hidden layers. The mathematical operation that connects the different layers
 is a matrix multiplication, where the entrys of the matrix are called weights, whose values will be optimized by the nerual network. In order to learn complex
 relations, there needs to be a non-linear operation applied after each layer. Otherwise, there would just be a series of linear operations, which would be nothing else
-than one big linear operation. Common choices for activation functions are the ReLU, ELU oder SeLU activation function. After the last hidden layer a softmax activation function is applied,
+than one big linear operation. Common choices for activation functions are the ReLU, ELU oder SELU activation function. After the last hidden layer a softmax activation function is applied,
 which creates values between 0 and 1 for each class, where all four values add up to 1. The labels are correspondingly one-hot encoded. \\
 
 The performance of a neural network is measured with a loss function, that will be minimized in the learning process. In this thesis the cross-entropy loss, 

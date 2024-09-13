@@ -24,6 +24,42 @@ experimentally proven for the first time. \\
 There are two main production modes for di-Higgs and therefore for $HH \rightarrow b \bar{b} \gamma \gamma$: Vector boson fusion (VBF) and gluon gluon fusion (ggF). 
 The feynman graphs contributing to VBF are shown in Fig. \ref{fig:1}, the feynman graphs for ggF are presented in Fig. \ref{fig:2}. \\
 
+\begin{fmffile}{feynman}
+    \fmfset{curved}{tension=1.0}
+    \fmfset{dot_size}{thick}
+  
+    \begin{fmfgraph*}(150,100)
+      \fmfleft{i1, i2}
+      \fmfright{o1, o2}
+      \fmftop{v1}
+      \fmfbottom{v2}
+  
+      % Gluon lines
+      \fmf{gluon}{i1, v1}
+      \fmf{gluon}{i2, v1}
+      
+      % Top quark loop
+      \fmf{fermion, tension=1.0}{v1, v2}
+      \fmf{fermion, tension=1.0}{v2, v1}
+      
+      % Higgs boson emission
+      \fmf{dashes, tension=0.5}{v1, o1}
+      \fmf{dashes, tension=0.5}{v1, o2}
+      
+      % Higgs boson decays into two Higgs bosons
+      \fmf{dashes, tension=0.5}{o1, o2}
+      \fmf{dashes, tension=0.5}{o2, o1}
+      
+      % Label the particles
+      \fmflabel{Gluon 1}{i1}
+      \fmflabel{Gluon 2}{i2}
+      \fmflabel{Top quarks}{v1}
+      \fmflabel{Higgs}{v2}
+      \fmflabel{Higgs 1}{o1}
+      \fmflabel{Higgs 2}{o2}
+    \end{fmfgraph*}
+\end{fmffile}
+
 % \Figure{H}{0.8}{fig:1}{Feynman graphs VBF}{ - The three production modes of di-Higgs via VBF.}{content/Plots/Feynman_VBF.png}
 % \Figure{H}{0.8}{fig:2}{Feynman graphs ggF}{ - The production modes of di-Higgs via ggF. The upper diagrams correspond to SM processes while the lower ones correspond to BSM processes.}{content/Plots/Feynman_ggF.png}
 
