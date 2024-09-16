@@ -63,42 +63,6 @@ did not improve over a certain number of epochs and prevents overtraining~\cite{
 % is indirectly involved in building the model and the validation loss decides which model is the best. Finally, after all the hyperparameters have been set, the test dataset is apllied on the model, its
 % use is to measure the final performance. \\
 
-\subsection{Graph Attention Network}
-\label{sec:funcgat}
-
-A GAT is a more complex neural network that is structured very different from the MLP. Here each node represents an object and each object is described by a set of features. 
-In this theses a fully connected network is used, that means that all nodes are connected, where each connection is called an edge.
-In difference to the MLP, the GAT can learn itself the relations between different objects, so it needs far less input variables in general. \\
-
-For each event there is a different amount of nodes, since the events can have two to six jets and up to four leptons. The features for each node are $p_T$, $\eta$, $\phi$, ID and an index that gives information on the 
-type of the object. Given this set of node and features for each event the attention coefficients $e_{ij}$
-for each edge are constructed: First the node features of node $i$ and $j$ are multilplied with the weight matrix $W$, which delivers the parameters $z$ for both nodes, which are then concatenated
-and multiplied with the shared attention mechanism $a$. $W$ and $a$ are both learnable network parameters~\cite{GAT:2018}.
-
-\eqn{
-    e_{ij} = a (W h_i || W h_j) =  a (z_i || z_j)
-}
-
-After that, a ReLU activation function is applied on the attention coeficients and then a softmax activation function is used to normalize the attention coefficients, that indicate the importance of 
-node j's features to node i. 
-
-\eqn{
-    \alpha_{ij} = softmax_j(ReLU(e_{ij})) = \frac{exp(e_{ij})}{\sum_{k \in N_i}exp(e_{ik})}
-}
-
-After applying another non-linearity $\sigma$ on the product of the normalized attention coefficients and $z$, the output feature for each node can be built by adding up all the neighberhood features.
-
-\eqn{
-    h_i' = \sigma \bigl(\sum_{j \in N_i} \alpha_{ij} W h_j \bigr)
-}
-
-This process is repeated $K$ times, where each repetition is called an head. After $K$ heads the output features are averaged,
-
-\eqn{
-    h_i' = \sigma \bigl( \frac{1}{K} \sum_{k=1}^{K} \sum_{j \in N_i} \alpha_{ij}^{k} W^{k} h_j \bigr)
-}
-
-so the output $h_i'$ of this first GAT layer can be passed to another layer, which is built in the same way~\cite{GAT:2018}. Finally the GAT output is passed to an MLP, which then performs the signal background classification.
 
 \subsection{Hyperparameter Optimization}
 \label{sec:funcgat}

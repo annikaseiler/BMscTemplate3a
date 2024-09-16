@@ -1,14 +1,13 @@
-\Section{HH production and the CMS detector}
+\Section{Higgs physics and the CMS detector}
 \label{sec:theory}
 
-\subsection{The Higgs boson in the Standardmodel}
+\subsection{The Higgs boson in the Standard Model}
 
-The standardmodel of particle physics describes three of the four elementary forces, explains which particles can participate in which interactions and which exchange particles are
-used to transfer the forces. The question of what gives elementary particles their mass remained unanswered for a long time. With the discovery of the Higgs boson, this mechanism was
-experimentally proven for the first time. \\
-
-
-
+The Standard Model of particle physics describes three of the four elementary forces, explains which particles can participate in which interactions and which exchange particles are
+used to transfer the forces. The question of what gives particles their mass was answered by verifying the Brout-Englert-Higgs (BEH) mechanism: The BEH mechanism describes how the electroweak symmetry
+is broken spontaneously while preserving gauge symmetry, which allows mass generation for the vector bosons. Interactions between fermions and the Higgs field result in them also acquiring masses~\cite{Guerrero:2021}. The self-couplings of the Higgs boson $\lambda_{HHH} = \lambda_{HHHH} = m_H^2/(2v^2)$ are directly related
+to the vacuum expectation value of the Higgs-field~\cite{HandbookLHC}, so the verification of this relation is a crucial test for the consistency of the BEH mechanism with the SM. 
+The discovery of the Higgs boson provided first experimental evidence of this mechanism~\cite{Guerrero:2021}.\\
 
 % The Standardmodel of particle physics describes the strong, weak and electromagnetic interaction and introduces the elementary particles. The elementary particles are grouped into 
 % fermions, which include all quarks and leptons, and bosons, which carry the elemntary forces. The SM predicts that the vector bosons and fermions are massless, but in fact their masses can be measured.
@@ -25,68 +24,64 @@ There are two main production modes for di-Higgs and therefore for $HH \rightarr
 The feynman graphs contributing to VBF are shown in Fig. \ref{fig:1}, the feynman graphs for ggF are presented in Fig. \ref{fig:2}. \\
 
 \begin{fmffile}{feynman}
-    \fmfset{curved}{tension=1.0}
-    \fmfset{dot_size}{thick}
-  
-    \begin{fmfgraph*}(150,100)
-      \fmfleft{i1, i2}
-      \fmfright{o1, o2}
-      \fmftop{v1}
-      \fmfbottom{v2}
-  
-      % Gluon lines
-      \fmf{gluon}{i1, v1}
-      \fmf{gluon}{i2, v1}
-      
-      % Top quark loop
-      \fmf{fermion, tension=1.0}{v1, v2}
-      \fmf{fermion, tension=1.0}{v2, v1}
-      
-      % Higgs boson emission
-      \fmf{dashes, tension=0.5}{v1, o1}
-      \fmf{dashes, tension=0.5}{v1, o2}
-      
-      % Higgs boson decays into two Higgs bosons
-      \fmf{dashes, tension=0.5}{o1, o2}
-      \fmf{dashes, tension=0.5}{o2, o1}
-      
-      % Label the particles
-      \fmflabel{Gluon 1}{i1}
-      \fmflabel{Gluon 2}{i2}
-      \fmflabel{Top quarks}{v1}
-      \fmflabel{Higgs}{v2}
-      \fmflabel{Higgs 1}{o1}
-      \fmflabel{Higgs 2}{o2}
-    \end{fmfgraph*}
+    \begin{fmfgraph}(150,100)
+        \fmfleft{i1,i2}  
+        \fmfright{o1, o2}   
+        
+        \fmf{gluon}{i1,v1}
+        \fmf{gluon}{i2,v2}
+
+        \fmf{fermion}{v2,v1}
+        \fmf{fermion}{v1,v3}
+        \fmf{fermion}{v3,v2}
+       
+        \fmf{dashes}{v2,o1}
+        \fmf{dashes}{v3,o2}
+        
+        \fmflabel{g}{i1}
+        \fmflabel{g}{i2}
+        \fmflabel{H}{o1}
+        \fmflabel{H}{o2}
+    \end{fmfgraph}
 \end{fmffile}
 
 % \Figure{H}{0.8}{fig:1}{Feynman graphs VBF}{ - The three production modes of di-Higgs via VBF.}{content/Plots/Feynman_VBF.png}
 % \Figure{H}{0.8}{fig:2}{Feynman graphs ggF}{ - The production modes of di-Higgs via ggF. The upper diagrams correspond to SM processes while the lower ones correspond to BSM processes.}{content/Plots/Feynman_ggF.png}
 
-These production modes allow access to five different couplings, where $\lambda_{HHH}$ and $y_t$ belong to SM processes and $c_2$, $c_{2g}$ and $c_{g}$ only occur in BSM processes.
-$\lambda_{HHH}$ describes the trilinear self-coupling of the Higgs boson and $y_t$ the top Yukawa coupling. The interaction between two Higgs bosons and two top quarks is described by $c_2$,
-$c_{2g}$ is the coupling between two Higgs bosons and two gluons and  $c_{g}$ describes the interaction between Higgs bosons and gluons.
+The ggF production modes allow access to five different couplings, where $\lambda_{HHH}$ and $y_t$ belong to SM processes and $c_2$, $c_{2g}$ and $c_{g}$ only occur in BSM processes.
+$\lambda_{HHH}$ describes the trilinear self-coupling of the Higgs boson and $y_t$ the top Yukawa coupling. The interaction between two Higgs bosons and two top quarks is described by $c_2$.
+$c_{2g}$ is the coupling between two Higgs bosons and two gluons and $c_{g}$ describes the interaction between Higgs bosons and gluons.
 Deviations from the SM expectations
-can be parametrized through $\kappa_{\lambda} := \lambda_{HHH}/\lambda_{HHH}^{SM}$ and $\kappa_{t} := y_{t}/y_{t}^{SM}$~\cite{CMS:2021qbp}. 
+can be parametrized through $\kappa_{\lambda} := \lambda_{HHH}/\lambda_{HHH}^{SM}$ and $\kappa_{t} := y_{t}/y_{t}^{SM}$~\cite{CMS:2021qbp}.
+The the HVV coupling $c_V$ and the HHVV coupling $c_{2V}$ are introduced for the VBF production modes.
 
 \subsection{The CMS detector}
 \label{sec:cms_det}
 
 % The CMS detector which is operated at the Large Hadron Collider (LHC) at CERN sits around 100m underground, has a length of 21.6m and a diameter of 14.6m.
-The centerpiece of the CMS detector is the 4-T superconducting soleoid, which allows track reconstruction of high energetic particles. The inner tracker,
-the electric calorimeter (ECAL) and the hadronic calorimeter (HCAL) are placed inside the coil. The muon chambers are located outside the coil and are embedded in the steel return yokes~\cite{CMS:2008}. \\
+The centerpiece of the CMS detector is the 4-T superconducting solenoid, which allows track reconstruction of high energetic charged particles by bending the trajectories. The tracker,
+the electromagnetic calorimeter (ECAL) and the hadronic calorimeter (HCAL) are placed inside the superconductiong solenoid. The muon chambers are located outside the solenoid and are embedded in the steel return yokes~\cite{CMS:2008}. \\
 
-The ECAL is made of 75 848 lead tungstate (PbWO$_4$) crystals which are mounted in the barrel and the two endcaps of the ECAL. The photodetectors need to be fast, able to operate in the magnetic field and
-resistant to radiation and particles that pass through them. To meet these requiremets the photodetectors in the barrel are avalanche photodiodes (APDs), in the endcap vacuum phototriodes (VPT) are used.
-The Hadronic Calorimeter (HCAL) is placed outside the ECAL and constits of 70 000 tiles of scintillators~\cite{CMS:2008}. \\
+The ECAL is made of $75 848$ lead tungstate (PbWO$_4$) crystals which are mounted in the barrel and the two endcaps of the ECAL. The photodetectors in ECAL need to be fast, able to operate in the magnetic field and
+resistant to radiation and particles that pass through them. To meet these requiremets the photodetectors in the barrel are avalanche photodiodes (APDs), whilst in the endcap vacuum phototriodes (VPT) are used.
+The HCAL is placed outside the ECAL and constits of $70 000$ tiles of scintillators. The active material in the barrel is a 3.7-mm-thick Kuraray SCSN81 plastic scintillator. 
+In the endcap for the layer $0$ a 9-mm-thick Bicron BC408 is used, the ones of the layers $1-17$ are 3.7-mm-thick SCSN81 scintillators~\cite{CMS:2008}.\\
 
-Only a small amount of collisions is from physical interest: In order to select the relevant events a two level trigger system is used. The first level trigger (L1) is implemented in the hardware of CMS and filters the events
-within $4 \mu$s. The regional calorimeter trigger (RCT) takes into account data from the ECAL, HCAL and muon chambers and calculates regional quantities, e. g. $E_T$ sums. The global trigger (GT) processes the inputs fron the RCT,
-sorts candidates built by the RCT and calculates global quantities like $E_T^{miss}$. The second trigger level (High level trigger, HLT) applies selection cuts on the objects of events that passed the L1 so that only those events which
+Only a small percentage of collisions are of physical interest: In order to select the relevant events a two level trigger system is used. The first level trigger (L1) is implemented in the hardware of CMS and filters the events
+within $4 \mu$s. It has two stages: The first stage is the regional calorimeter trigger (RCT). It takes into account data from the ECAL, HCAL and muon chambers and calculates regional quantities. The second stage, which is the global trigger (GT), processes the inputs of the RCT,
+sorts candidates built by the RCT and calculates global quantities. The second trigger level (High level trigger, HLT) applies selection cuts on the objects of events that passed the L1 so that only those events which
 are of interest for data analysis are kept~\cite{CMS:2017trg}. \\
 
-The algorithm that reconstructs objects based on the signature left in the detector is called particle-flow (PF). The PF algorithm combines the collected data from different detector areas and summarizes signatures that are so close to
-each other that they probably originated from the same particle or the same jet into so-called superclusters. To identify jets the information from the ECAL and HCAL are sufficient; isolated photons or electrons are identified by clustering in the ECAL~\cite{CMS:2017pf}.
+The algorithm that reconstructs objects based on the signature left in the detector is called particle-flow (PF).
+Electrons and isolated photons are reconstructed together through combining the information given by the inner tracker and the calorimeters, since they leave a very similar track
+in the detector: Electrons are likely to emit photons through bremsstrahlung and photons often convert to $e^+e^-$ pairs, which again emit bremsstrahlung photons. 
+Hadrons are identified at last after muons, electrons and isolated photons have already been identified.
+If several energy deposits in the calorimeters are close to each other, it is highly likely that they originate from the same object and are therefore grouped into clusters.
+Clusters not linked to any track are assigned as photons if they are in the ECAL and as neutral hadrons if they are in the HCAL. 
+Correspondingly clusters that are linked to a track must come from charged particles like electrons or charged hadrons~\cite{CMS:2017pf}. 
+
+% The PF algorithm combines the collected data from different detector areas and summarizes signatures that are so close to
+% each other that they probably originated from the same particle or the same jet into so-called superclusters. To identify jets the information from the ECAL and HCAL are sufficient; isolated photons or electrons are identified by clustering in the ECAL~\cite{CMS:2017pf}.
 
 
 

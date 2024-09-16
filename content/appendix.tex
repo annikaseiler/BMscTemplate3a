@@ -1,0 +1,72 @@
+\Section{Appendix}
+\label{sec:appendix}
+
+\subsection*{Graph Attention Network}
+
+In this thesis a Graph Attention Network (GAT) was built to perform the signal background classification. Since the model does not show a performance that refelcts a GAT's potential
+because the optimization of the network could not be finished in time, the results of this classification are presented in the appendix. \\
+
+A GAT is a more complex neural network that is structured very different from the MLP. Here each node represents an object and each object is described by a set of features. 
+In this theses a fully connected network is used, that means that all nodes are connected, where each connection is called an edge.
+In difference to the MLP, the GAT can learn itself the relations between different objects, so it needs far less input variables in general. \\
+
+For each event there is a different amount of nodes, since the events can have two to six jets and up to four leptons. The features for each node are $p_T$, $\eta$, $\phi$, ID and an index that gives information on the 
+type of the object. Given this set of node and features for each event the attention coefficients $e_{ij}$
+for each edge are constructed: First the node features of node $i$ and $j$ are multilplied with the weight matrix $W$, which delivers the parameters $z$ for both nodes, which are then concatenated
+and multiplied with the shared attention mechanism $a$. $W$ and $a$ are both learnable network parameters~\cite{GAT:2018}.
+
+\eqn{
+    e_{ij} = a (W h_i || W h_j) =  a (z_i || z_j)
+}
+
+After that, a ReLU activation function is applied on the attention coeficients and then a softmax activation function is used to normalize the attention coefficients, that indicate the importance of 
+node j's features to node i. 
+
+\eqn{
+    \alpha_{ij} = softmax_j(ReLU(e_{ij})) = \frac{exp(e_{ij})}{\sum_{k \in N_i}exp(e_{ik})}
+}
+
+After applying another non-linearity $\sigma$ on the product of the normalized attention coefficients and $z$, the output feature for each node can be built by adding up all the neighberhood features.
+
+\eqn{
+    h_i' = \sigma \bigl(\sum_{j \in N_i} \alpha_{ij} W h_j \bigr)
+}
+
+This process is repeated $K$ times, where each repetition is called an head. After $K$ heads the output features are averaged,
+
+\eqn{
+    h_i' = \sigma \bigl( \frac{1}{K} \sum_{k=1}^{K} \sum_{j \in N_i} \alpha_{ij}^{k} W^{k} h_j \bigr)
+}
+
+so the output $h_i'$ of this first GAT layer can be passed to another layer, which is built in the same way~\cite{GAT:2018}. Finally the GAT output is passed to an MLP, which then performs the signal background classification. \\
+
+For the GAT much less input variables compared to the MLP are needed, since the network can learn the relations between different objects by itself. The only variables used for classification are
+$p_T$, $\eta$, $\phi$ and an identification variable (photon MVA ID, b-tagging score, lepton MVA ID) for each object. \\
+
+The GAT is trained for $400$ epochs with an early stopping patience of $75$ epochs and a batch size of $1024$. The in-dimension equals the number of features ($10$), the out-dimension is the number of classes ($4$).
+The hidden dimenson was chosen as $64$ and two layers of a GAT are applied on the data before passing them to the MLP. The used hyperparameters are presented in Table \ref{tab:9e}
+
+\Table{H}{tab:9e}{Hyperparameters for the GAT and the MLP after the GAT}{}{c c}{
+    \hline
+    Hyperparameter & Result \\
+    \hline
+    Number of layers for the MLP & $5$ \\
+    Number of nodes for the MLP & $1024$ \\
+    Activation function for the MLP & ReLU \\
+    Learning rate & $8.5 \cdot 10^{-5}$ \\
+    Weight decay & $1.5  \cdot 10^{-5}$ \\
+    Dropout probability & $0.2$\\
+    \hline
+}
+
+The loss plot of the GAT can be seen in Fig.???, the accuracy plot is presented in Fig. ???. It can be seen that the accuracy flucuates a lot for the validation data set, so the model seems to have problems
+with generalizing the data. The best achieved results for the validation data are:
+
+\eqn{
+    \mathcal{L} = 0.8888\\
+    acc = 0.9162
+}
+
+It can be seen that both values are significantly worse then those from the MLP. The confusion matrix can be seen in Fig. ???, the ROC one vs. all in Fig. ??? and the ROC one vs. one in Fig. ???
+
+The performance of the GAT cannot yet be conclusively evaluated since the model was not further optimized and the choice of hyerparameters have a large influence on the model's performane.

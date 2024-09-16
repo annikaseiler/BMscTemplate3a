@@ -102,9 +102,9 @@ Applying all these cuts ensures that the correct objects are actually identified
 \label{sec:trainvar}
 
 The choice of the variables used for signal-background classification depends on the neural network that is used. For the MLP the variables can mostly be grouped into three
-categories: Kinematic variables, object resolution variables and object identification variables \ref{CMS:2021qbp}. Each event can have, depending on the underlying process, two photons, two b-jets,
+categories: Kinematic variables, object resolution variables and object identification variables~\cite{CMS:2021qbp}. Each event can have, depending on the underlying process, two photons, two b-jets,
 two VBF-jets, up to six jets in total and up to four leptons. For all these objects several variables which are suitable to distinguish signal from background are used.
-The variables regarding the photons, b-jets and VBF-jets are listed in Table \ref{tab:6e}.
+In Table \ref{tab:6e} the variables regarding the photons, b-jets and VBF-jets are listed~\cite{Run2analysisnote}.
 
 \Table{H}{tab:6e}{Photon, b-jet and VBF-jet variables}{}{c c c c}{
     \hline
@@ -125,37 +125,34 @@ also given as an input. Moreover the variables $\sigma_M/M$, which is the mass r
 Furthermore angular variables between different objects are also taken into account. The angular distances $\Delta R$ between each photon and jet of the diphoton and dijet pair 
 and between the two VBF jets and each of the two photons and b-jets are used, together with the minimal angular distance between a photon and a b-jet ($\Delta R_{min}^{\gamma b}$), between a VBF-jet and a photon
 ($\Delta R_{min}^{j \gamma}$) and between a VBF-jet and a b-jet ($\Delta R_{min}^{j b}$).
-Also the helicity angles $cos(\theta_{\gamma \gamma})$ between the two photons, $cos(\theta_{bb})$ between the two b-jets and the colins soper angle $cos(\theta_{CS}^*)$ are stated.
+Also the helicity angles $cos(\theta_{\gamma \gamma})$ between the two photons, $cos(\theta_{bb})$ between the two b-jets and the Collins-Soper angle $cos(\theta_{CS}^*)$ are stated.
+The Collins-Soper angle is the angle between the $H \rightarrow \gamma \gamma$ candidate~\cite{Run2analysisnote} and the Collins-Soper reference frame, where the z-axis goes along the beam axis~\cite{CSangle}.
 Moreover the MET-variables $MET \phi$, $MET p_T$, $\Delta \phi (MET, b_1)$ and $\Delta \phi (MET, b_2)$ are used. The $M_X$ variable is stated for the four body mass,
 
 \eqn{
     M_X = M(bb \gamma \gamma) - M(bb) - M(\gamma \gamma) + 2M_H
 }
 
-where $M_H = 125$ GeV is the Higgs mass. To reject those events from the $t \bar{t}H$-background, where a W-Boson decays into a quark-antiquark pair, the $\chi_{t0}$-variable for events between four and six jets,
+where $M_H = 125$ GeV is the Higgs mass~\cite{Run2analysisnote}. To reject those events from the $t \bar{t}H$-background, where a W-Boson decays into a quark-antiquark pair, the $\chi_{t0}$-variable for events between four and six jets,
 
 \eqn{
     \chi_{t0}^2 = \bigl( \frac{m_w-m_{jj}}{0.1 \cdot m_w} \bigr)^2 +  \bigl( \frac{m_t-m_{bjj}}{0.1 \cdot m_t}\bigr)^2
 }
 
-and the $\chi_{t0}$-variable for events with six jets or more is used,
+and the $\chi_{t1}$-variable for events with six jets or more is used,
 
 \eqn{
     \chi_{t1}^2 = \bigl(\frac{m_w - m_{jj, 1}}{0.1 \cdot m_w} \bigr)^2 + \bigl(\frac{m_t-m_{bjj, 1}}{0.1 \cdot m_t} \bigr)^2 + \bigl(\frac{m_w - m_{jj, 2}}{0.1 \cdot m_w} \bigr)^2 + \bigl(\frac{m_t-m_{bjj, 2}}{0.1 \cdot m_t} \bigr)^2
 }
 
-where $m_w=80.377$ GeV is the mass of a W-boson and $m_t=172.76$ GeV is the topquark's mass.
+where $m_w=80.377$ GeV is the mass of a W-boson and $m_t=172.76$ GeV is the topquark's mass~\cite{Run2analysisnote}.
 The centrality variable that relates the direction of the VBF-jets to that of the Higgs candidates is defined as follows,
 
 \eqn{
     C_H = exp \biggl[ - \frac{4}{(\eta_1^{VBF} - \eta_2^{VBF})^2} \bigl( \eta^H - \frac{\eta_1^{VBF} + \eta_2^{VBF}}{2} \bigr)^2 \biggr]
 }
 
-for both of the Higgs candidates this is used as an input. \\
-
-For the GAT much less input variables are needed, since the network can learn the relations between different objects by itself. The only variables used for classification are
-$p_T$, $\eta$, $\phi$ and an identification variable (photon MVA ID, b-tagging score, lepton MVA ID) for each object.
-
+for both of the Higgs candidates this is used as an input~\cite{CMS:2021qbp}. \\
 
 
 % "chi_t0",
