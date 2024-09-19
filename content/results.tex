@@ -90,7 +90,7 @@ When comparing Bayesian optimization and random search it can be said that it do
 and were achieved only nine trials apart. Since the Bayesian optimization is a far more complex algorithm than the random search it can be said that this complexity does not show in the results,
 so in this thesis a random search algorithm would be completely sufficient as well.
 
-\subsection{Performance of the Neural Networks}
+\subsection{Performance of the Neural Network}
 \label{subsec:perfgat}
 
 The results of the Bayesian hyperparameter optimization are chosen as the hyperparameters for the MLP. A batch size of $512$ is used, the early stopping patience is $75$ epochs and the maximum
@@ -133,7 +133,7 @@ For the confusion matrix a threshold of $0.5$ is set, which means that if the hi
 of the one-hot encoded prediction is larger than $0.5$ the event is assigned to the corresponding class, otherwise it is not assigned to a class at all. The confusion matrix shows
 how many percent of events of each class are actually predicted to that class and how many events are assigned to what other class. The confusion matrix for the MLP can be seen in Fig. \ref{fig:9}.
 
-\Figure{H}{0.9}{fig:9}{Confusion matrix with a threshhold of $0.5$}{}{content/Plots/performance/cm_plot.png}
+\Figure{H}{0.9}{fig:9}{Confusion matrix with a threshhold of $0.5$}{}{content/Plots/performance/cm_plot Kopie.png}
 
 The plot shows that the non-resonant background could be identified best, followed by the $t \bar{t} H$-background. The model seems to have some difficulty to distinguish
 the two signal classes from each other, this will be studied later in this chapter. Furthermore especially the ggF-class is often misidentified with the $t \bar{t}H$-background, whilst differentiating the VBF class from the $t \bar{t}H$-background seems to work better.
@@ -162,7 +162,7 @@ where the false positives are events that were falsly assigned to a specific cla
 The threshhold value at which an event is assigned to a specific class is varied between $0$ and $1$ and for each value and class the TPR and FPR are calculated. Then the area under the curve can be estimated,
 which should be $1$ in a perfect classification. 
 
-\Figure{H}{0.8}{fig:10}{ROC one vs. all}{}{content/Plots/performance/roc_plot.png}
+\Figure{H}{0.8}{fig:10}{ROC one vs. all}{}{content/Plots/performance/roc_plot Kopie.png}
 
 In Fig. \ref{fig:10} the one vs. all ROC curve is presented,
 where all events, that do not belong to the considered class are summarized together. The dashed line represents a random classification, where $50 \%$ of the events would be assigned to the considered
@@ -171,7 +171,7 @@ values are a little bit lower ($0.94$ for ggF and $0.95$ for VBF).
 
 Fig. \ref{fig:11} shows the one vs. one ROC curves for the signal classes vs. each of the background classes, where only the two classes considered are taken into account. 
 
-\Figure{H}{0.8}{fig:11}{ROC one vs. all}{}{content/Plots/performance/combined_roc_curves.png}
+\Figure{H}{0.8}{fig:11}{ROC one vs. all}{}{content/Plots/performance/combined_roc_curves Kopie.png}
 
 Here it can be seen that the two signal classes can better be differentiated from the non-resonant background than from the $t \bar{t}H$-background and again VBF-events are a bit
 better differentiated from the $t \bar{t}H$-background than ggF-events. Finally the model is applied on the test data to evaluate loss and accuracy for completely unseen data, that was not
@@ -193,10 +193,10 @@ how good the model can identify the signal classes over all possible threshholds
     \hline
      & $1$ & $2$ & $3$ & $5$ & $10$ \\
     \hline
-    Non-resonant background & $0.99$ & $0.99$& $1.00$ & $0.99$ & $0.99$ \\
-    $t \bar{t}H$-background & $0.98$ & $0.98 $& $0.98$ & $0.97$ & $0.96$ \\
-    ggF to HH & $0.94$ & $0.94$ & $0.94$ & $0.94$ & $0.92$ \\
-    VBF to HH & $0.95$ & $0.95$ & $0.95$ & $0.94$ & $0.93$ \\
+    Non-resonant background & $0.9949$ & $0.9948$& $0.9950$ & $0.9939$ & $0.9907$ \\
+    $t \bar{t}H$-background & $0.9768$ & $0.9770 $& $0.9766$ & $0.9728$ & $0.9625$ \\
+    ggF to HH & $0.9391$ & $0.9371$ & $0.9351$ & $0.9301$ & $0.9241$ \\
+    VBF to HH & $0.9495$ & $0.9474$ & $0.9451$ & $0.9411$ & $0.9313$ \\
     \hline
 }
 
@@ -206,14 +206,14 @@ In this tabular the AUC for ROC one vs. one curves are presented
     \hline
      & $1$ & $2$ & $3$ & $5$ & $10$ \\
     \hline
-    ggF to HH vs. non-resonant background & $0.99$ & $1.00$ & $1.00$ & $0.99$ & $0.99$ \\
-    ggF to HH vs. $t \bar{t}H$-background & $0.96$ & $0.96$ & $0.96$ & $0.96$ & $0.94$ \\
-    VBF to HH vs. non-resonant background & $0.99$ & $0.99$ & $0.99$ & $0.99$ & $0.99$ \\
-    VBF to HH vs. $t \bar{t}H$-background & $0.98$ & $0.98$ & $0.98$ & $0.97$ & $0.97$ \\
+    ggF to HH vs. non-resonant background & $0.9950$ & $0.9952$ & $0.9952$ & $0.9940$ & $0.9898$ \\
+    ggF to HH vs. $t \bar{t}H$-background & $0.9590$ & $0.9602$ & $0.9603$ & $0.9561$ & $0.9449$ \\
+    VBF to HH vs. non-resonant background & $0.9935$ & $0.9939$ & $0.9939$ & $0.9930$ & $0.9895$ \\
+    VBF to HH vs. $t \bar{t}H$-background & $0.9764$ & $0.9771$ & $0.9772$ & $0.9725$ & $0.9653$ \\
     \hline
 }
 
-\Figure{H}{0.8}{fig:12}{Confusion matrix with a threshhold of $0.5$}{- Weight increase of $3$}{content/Plots/performance/cm_plot_cw_3.png}
+\Figure{H}{0.8}{fig:12}{Confusion matrix with a threshhold of $0.5$}{- Weight increase of $3$}{content/Plots/performance/cm_plot3 Kopie.png}
 
 It can be seen that for weight increases of $5$ and $10$ the perfromance is worse than without a weight increase. For a weight increase of $2$ and $3$ the performance is mostly the same, only
 the non-resonant background can now be a little bit better differentiated from the rest. When looking at the confusion matrix of the weight increase of $3$ (Fig.\ref{fig:12}) it can be seen, that at a threshhold of $0.5$
@@ -303,28 +303,6 @@ production mode by contrast the vector bosons are radiated from the beam quarks,
 are in a lower energy range as well as the decay products of these Higgs bosons. In the misidentified signal events it can be seen that above average high energetic b-jets originating from a VBF production mode
 are identified as ggF-events and below average low energetic b-jets from the ggF-class are identified as VBF-events. The same behaviour can be observed for the diphoton $\frac{p_T^{\gamma \gamma}}{m_{bb \gamma \gamma}}$-variable,
 as well as for the leading and subleading photon and jet $p_T$s scaled with the diphoton and dijet masses ($\frac{p_T^{\gamma}}{m_{\gamma \gamma}}$ and $\frac{p_T^{b}}{m_{bb}}$).
-
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{content/Plots/misidentified_signal/DeltaR_j1g1_plot Kopie.png}
-        \caption{Histograms of all VBF and ggF events}
-        \label{fig:roc1}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.45\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{content/Plots/misidentified_signal/MisIdSignal_plot_DeltaR_j1g1 Kopie.png}
-        \caption{Misidentified signal events}
-        \label{fig:roc2}
-    \end{subfigure}
-    \caption{Comparison of $\Delta R_{j1 \gamma 1}$ between misidentified signal events and all signal events}
-    \label{fig:combined_roc}
-\end{figure}
-
-Finally the angular distance between the leading photon and leading b-jet $\Delta R_{\gamma1 b1}$ is differently distributed for the misidentified signal events compared to all signal events from the corresponding class:
-In the ggF production mode the distribution is much smaller than for VBF production, so widely spread particles from ggF are identified as VBF. \\
 
 To sum it up for different kinds of variables it can be clearly observed a difference between the misidentified events and all events from a specific signal class, 
 which provides a good indication of why the model cannot distinguish the signal classes from each other so well.

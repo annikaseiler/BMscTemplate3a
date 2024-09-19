@@ -1,22 +1,32 @@
 \Section{Conclusion}
 \label{sec:conclusion}
 
-In this thesis di-Higgs processes in the $bb \gamma \gamma$ decay channel were studied, which are directly related to the BEH-mechanism and BSM theories through different couplings like the trilinear self-coupling of the Higgs boson $\lambda_{HHH}$.
-Vector boson fusion and gluon gluon fusion are the main production modes of two Higgs bosons.
-The $bb \gamma \gamma$ decay channel is chosen because the decay of a Higgs boson into two bottom quarks has a large branching fraction and the two photons produced by the other Higgs boson 
-can be detected with a good mass resolution. The most dominant background processes in this decay channel can be divided into two classes: In the $t \bar{t} H$-background class two top quarks radiate
-a Higgs boson which then decays into two photons. If each top quarks then decays into a vector boson and a b-quark, two photons and two b-jets will be detected, with similar kinematics compared to the signal.
-The second background class is the non-resonant background, which summarizes $\gamma$ and jets, and $\gamma$ $\gamma$ and jets events. To differ the two di-Higgs production modes
-from the background processes in the $bb \gamma \gamma$ decay channel a multiclass classification with an MLP is performed. Crucial for the performance of the neural network are the hyperparameters,
-which were optimzed both with Bayesian optimization and with a random search algorithm to minimize the loss value. To compare these algorithms it can be said that the Bayesian optimization
-only achieved an unsignificantly better loss value so for this study a andom search algorithm is completely sufficient. When observing the performance of the MLP through 
-ROC curves and confusion matrices it can be said that the non-resonant background can best be differentiated from the other class, which is consistent with the fact that this class' kinematics
-differs the most from the other classes. After that the $t \bar{t} H$-background can be identified best. When looking at the confusion matrix it can be seen that there are two main misidentifications:
-First the model misidentifies the ggF-signal with the $t \bar{t} H$-background. This can be explained with the fact that these two classes show more similar kinematics than the VBF-signal and the $t \bar{t} H$-background.
-In two out of three VBF production modes the Higgs bosons tends to be radiated along the beam axis, whilst in the other two classes the Higgs bosons direction compared to the beam axis is arbitrary. Second it can be observed that especially the two signal classes
-are misidentified with each other. Increasing the weights for events from signal classes does not solve this issue. To understand why this happens distributions for different variables of ggF-events identified as VBF-events
-and VBF-events identified as ggF-events are compared to the inclusive ggF and VBF samples. It can be seen that the Collins-Soper angle, the $\eta$-distributions of the VBF-tagged jets,
-the transverese momentums scaled by the invariant masses of the objects from the considered decay channel and the angular distances between these objects play a major role in the misidentification. \\
+In this thesis, di-Higgs processes in the $HH \rightarrow b \bar{b} \gamma \gamma$ decay channel were studied, which are directly related to the BEH mechanism and beyond the Standard Model (BSM)
+theories through various couplings, such as the trilinear self-coupling of the Higgs boson, $\lambda_{HHH}$. The main production modes for the creation of two Higgs bosons are vector boson fusion (VBF)
+and gluon-gluon fusion (ggF). \\
 
-In conclusion in this thesis is shown how an MLP performs on a signal-background classification in the HH $\rightarrow bb \gamma \gamma$ decay channel and how some difficulties in the classification can be explained
-to faciliate future studies of the presented processes.
+The $b \bar{b} \gamma \gamma$ decay channel is one of the most sensitive channels because the decay of one Higgs boson into two bottom quarks has a large branching ratio, and the two photons produced by the decay of the other Higgs boson
+can be detected with high mass resolution. The dominant background processes in this decay channel can be divided into two classes: The first class is the $t \bar{t} H$ background, where two top quarks radiate a Higgs boson that
+decays into two photons. If each top quark decays into a vector boson and a b-quark, the resulting final state consists of two photons and two b-jets with kinematics similar to the signal.
+The second background class is the non-resonant background, which includes $\gamma$+jets and $\gamma\gamma$+jets events. \\
+
+To distinguish the two di-Higgs production modes from background processes in the $b \bar{b} \gamma \gamma$ decay channel, a multiclass classification using a multi-layer perceptron (MLP) was performed.
+The neural network's performance depends on the hyperparameters, which were optimized using both Bayesian optimization and random search algorithms to minimize the loss function.
+A comparison of the two methods revealed that Bayesian optimization achieved only a marginally better loss value, indicating that random search is sufficient for this study. \\
+
+The performance of the MLP was evaluated using ROC curves and confusion matrices, showing that the non-resonant background could be most effectively distinguished from the other classes, consistent with
+the fact that its kinematics differ the most from the signal. The $t \bar{t} H$ background was also well identified. However, two major sources of
+misclassification were identified: First, the model frequently misclassified ggF signal events as $t \bar{t} H$ background, while the misidentification between VBF and $t \bar{t} H$ was less pronounced. This can be explained by the greater kinematic similarity between ggF and $t \bar{t} H$ compared to VBF and $t \bar{t} H$. 
+In many VBF production modes, the Higgs bosons tend to be produced along the beam axis, while in the ggF and $t \bar{t} H$ processes, the direction of the Higgs bosons relative to the beam axis
+is more arbitrary. Second, the two signal classes, ggF and VBF, were often confused. Increasing the weights of the signal classes during training did not resolve this issue, as seen in the AUC values. \\
+
+To better understand these misclassifications, distributions of ggF events identified as VBF and VBF events identified as ggF were compared to inclusive ggF and VBF samples. It was found that variables
+such as the Collins-Soper angle, the $\eta$ distributions of the VBF-tagged jets and the transverse momenta scaled by the invariant masses of the decay products play a major role in the misclassification. \\
+
+Future work could involve calculating the significance, which measures the number of correctly identified signal events relative to background events. Additionally, it would be worthwhile to explore how the
+performance of the MLP changes if certain low-level features are removed, as many high-level features are already provided and low-level features might be redundant. Finally, a Graph Attention Network could be
+a suitable alternative for classification, as it can dynamically adjust the number of objects per event and learn the relationships between them. A Graph Attention Network was also constructed in this thesis,
+but due to time constraints, it could not be studied in detail. The results and further details can be found in the appendix. \\
+
+In conclusion, this thesis demonstrates how an MLP performs in a signal-background classification for the $HH \rightarrow b \bar{b} \gamma \gamma$ decay channel and provides insight into the challenges in
+distinguishing between signal and background processes, facilitating future studies for the $HH \rightarrow b \bar{b} \gamma \gamma$ analysis at CMS for Run-3. \\

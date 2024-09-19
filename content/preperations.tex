@@ -7,7 +7,7 @@ and the other one into a b-jet pair. In the following chapter the background pro
 \subsection{Background processes}
 \label{sec:bkgproccess}
 
-The most dominant background process is the production of a single Higgs boson by a Top-Quark Antitop-Quark pair ($t\bar{t}H$), the feynman graph can be seen in Fig. \ref{fig:3}.
+The most dominant background process is the production of a single Higgs boson by a Top-Quark Antitop-Quark pair ($t\bar{t}H$), the feynman graph can be seen in Fig. \ref{fig:16}.
 Each Top-Quark decays with a branching ratio of $99.7 \%$ into a Bottom-Quark and a W-Boson, so if the Higgs boson decays into a photon pair
 it is very likely to observe a $b \bar{b} \gamma \gamma$ final state. In addition the two b-jets show very similar kinematics compared to the 
 b-jets of the signal events, which is why the $t\bar{t}H$-background leaves a very similar track in the detector compared to the signal.
@@ -15,9 +15,10 @@ The processes can best be distinguished by the decay of the W-Bosons in $t\bar{t
 a lepton and a neutrino. Not only are there no leptons produced in the signal events, but since neutrinos are often not detected the processes
 show different missing transverese-energy (MET) distributions. \\
 
-%\Figure{H}{0.8}{fig:3}{Feynman graphs ttH}{ - The production modes of ttH.}{content/Plots/feynmangrah_ttH.png}
+\Figure{H}{0.3}{fig:16}{Feynman graph for associated top pair production}{ - Exemplary production mode of $t\bar{t}H$ - Image taken from~\cite{CMS:2022Higgs}}{content/Plots/Feynman_ttH.png}
+\Figure{H}{0.6}{fig:17}{Exemplary Feynman graphs for non-resonant background}{}{content/Plots/Feynman_non_resonant.png}
 
-Finally $\gamma  + jets$ and $\gamma \gamma  + jets$ events represent the last imortant background category, exemplary feynman graphs are shown in Fig. ???.
+Finally $\gamma  + jets$ and $\gamma \gamma  + jets$ events represent the last imortant background category, exemplary feynman graphs are shown in Fig. \ref{fig:17}.
 In general the photons and jets from these events are located in a lower energy range than the signal. If the photons and jets are decay products of a Higgs boson,
 as is the case in the signal processes and in the $t \bar{t} H$-background, the invariant mass of the photon pair or jet pair must be just as large as the Higgs mass. In the $\gamma  + jets$ and $\gamma \gamma  + jets$
 background process, by contrast, the decay products can be radiated from particles with far less energy, which means that they themselves can also have lower energies. 
@@ -46,7 +47,7 @@ with the highest b-tagging scores and the VBF jet pair is built with the two jet
 For further identification of the diphoton or dijet pair, selection cuts based on the HiggsDNA are applied to the variables. The selection
 cuts for the diphoton-pair are presented in Table \ref{tab:2e}, the ones for the dijet-pair in \ref{tab:3e} and the ones for the VBF jets in \ref{tab:4e}. \\
 
-\Table{H}{tab:2e}{Diphoton selection cuts}{}{c c}{
+\Table{H}{tab:2e}{Photon selection}{}{c c}{
     \hline
     Variable & Cut \\
     \hline
@@ -54,17 +55,18 @@ cuts for the diphoton-pair are presented in Table \ref{tab:2e}, the ones for the
     subleading $p_T$ & > $25$ GeV  \\
     $\frac{p_T^{\gamma_1}}{M_{\gamma \gamma}}$ & > $\frac{1}{3}$ \\
     $\frac{p_T^{\gamma_2}}{M_{\gamma \gamma}}$ & > $\frac{1}{4}$ \\
+    $M_{\gamma \gamma}$ & > $100$ GeV \\
+    $M_{\gamma \gamma}$ & < $180$ GeV \\
     Barrel  $| \eta |$ & < $1.4442$ \\
     Endcap $| \eta |$ & > $1.566$ \\
     H/E & < $0.08$ \\
     MVA ID & > $-0.9$ \\
-    R9 & > $0.8$ \\
-    ChI & < $20$ \\
-    ChI/$E_T$ & < $0.3$ \\
     \hline
 }
 
-\Table{H}{tab:3e}{Dijet selection cuts}{}{c c}{
+% R9 & > $0.8$ ChI & < $20$ ChI/$E_T$ & < $0.3$
+
+\Table{H}{tab:3e}{Jet selection}{}{c c}{
     \hline
     Variable & Cut \\
     \hline
@@ -72,20 +74,19 @@ cuts for the diphoton-pair are presented in Table \ref{tab:2e}, the ones for the
     $M_{bb}$ & > $70$ GeV \\
     $M_{bb}$ & < $190$ GeV \\
     $| \eta |$ & < $2.5$ \\
-    $\Delta R_{b, \gamma \gamma}$ & < $0.4$ \\
-   $\Delta R_{b, \gamma}$ & < $0.4$ \\
+    $\Delta R_{b, \gamma}$ & > $0.4$ \\
     \hline
 }
 
-\Table{H}{tab:4e}{VBF jets selection cuts}{}{c c}{
+\Table{H}{tab:4e}{VBF jets selection}{}{c c}{
     \hline
     Variable & Cut \\
     \hline
     leading $p_T$ & > $40$ GeV  \\
     subleading $p_T$ & > $30$ GeV  \\
     $| \eta |$ & < $4.7$ \\
-    $\Delta R_{j, \gamma}$ & < $0.4$ \\
-    $\Delta R_{j, b}$ & < $0.4$ \\
+    $\Delta R_{j, \gamma}$ & > $0.4$ \\
+    $\Delta R_{j, b}$ & >$0.4$ \\
     \hline
 }
 
@@ -93,7 +94,8 @@ There are multiple reasons to apply selection cuts on the variables:
 First the detector resolution is important to consider by implementing cuts on $| \eta |$, since using data from an area where the resolution is bad could falsify the results.
 Second for some kinematic variables it is already known in what range they should be. For example should the invariant masses of the diphoton- and dijet-pair match the Higgs mass and because of
 an uncertainty due to the detector's resolution and statistic fluctuation the corresponding variables should be in an interval around the Higgs mass.
-Third it makes sense to apply cuts on identification variables like the photon MVA ID and b-tagging scores so that only variables with a sufficiently high probability of actually being the corresponding object are used. 
+Third it makes sense to apply cuts on identification variables like the photon MVA ID and b-tagging scores. These variables indicate how strongly an object was identified as a photon or a b-jet.
+The larger the value is, the higher is the probability that the object is actually a photon or a b-jet, so only variables with a sufficiently high probability of actually being the corresponding object are used. 
 Finally a certain signature left in the detector is expected for the objects from signal events. For example for a photon there should be much more energy deposited in the ECAL than in the HCAL and 
 the angular distance between a b-jet and a photon being decay products of two different Higgs bosons should not be too close.
 Applying all these cuts ensures that the correct objects are actually identified as a diphoton or dijet pair so that the performance of the neural networks is improved.
@@ -101,7 +103,7 @@ Applying all these cuts ensures that the correct objects are actually identified
 \subsection{Variables to distinguish signal from background}
 \label{sec:trainvar}
 
-The choice of the variables used for signal-background classification depends on the neural network that is used. For the MLP the variables can mostly be grouped into three
+The choice of the inputs used for signal-background classification depends on the neural network that is used. For the MLP, the input variables are grouped into three
 categories: Kinematic variables, object resolution variables and object identification variables~\cite{CMS:2021qbp}. Each event can have, depending on the underlying process, two photons, two b-jets,
 two VBF-jets, up to six jets in total and up to four leptons. For all these objects several variables which are suitable to distinguish signal from background are used.
 In Table \ref{tab:6e} the variables regarding the photons, b-jets and VBF-jets are listed~\cite{Run2analysisnote}.
@@ -119,15 +121,111 @@ In Table \ref{tab:6e} the variables regarding the photons, b-jets and VBF-jets a
     \hline
 }
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/pholead_PtOverM_plot.png}
+        \caption{Histogram of the leading $p_T^{\gamma}/m^{\gamma \gamma}$}
+        \label{fig:roc1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/dijet_PtOverM_ggjj_plot.png}
+        \caption{Histogram of $p_T^{bb}$/$m^{\gamma \gamma bb}$}
+        \label{fig:roc2}
+    \end{subfigure}
+    \caption{Histograms of $p_T^{\gamma}/m^{\gamma \gamma}$ and $p_T^{bb}$/$m^{\gamma \gamma bb}$ for all four classes}
+    \label{fig:18}
+\end{figure}
+
+In Fig. \ref{fig:18} the histograms of the leading $p_T^{\gamma}/m^{\gamma \gamma}$ and of the dijet $p_T^{bb}$/$m^{\gamma \gamma bb}$ is presented. It can be seen that 
+the $p_T$ scaled by the invariant mass peaks in the lowest region for the non-resonant background. Since there is not an high energetic Higgs boson involved in the process as it is in the other ones,
+it is expected that the energy range of the $b \bar{b} \gamma \gamma$-candidate is the lowest here. In the VBF events the Higgs bosons are radiated in a smaller angle to the beam which
+causes lower $p_T$ values compared to the remaining two classes, this can be also seen in the histograms. For this reason the $p_T$ variable is the highest for VBF and $t \bar{t} H$.
+
 In addition for the jets one to six and the leptons one to four the variables $p_T$, $\eta$, $\phi$ are used. Also the generation for each lepton is stated and the number of leptons and jets is
 also given as an input. Moreover the variables $\sigma_M/M$, which is the mass resolution for the diphoton pair and $\rho$, which is the median energy density of the jets, are stated. \\
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/lead_bjet_btagPNetB_plot.png}
+        \caption{Histogram of the leading b-jet's b-tagging score}
+        \label{fig:roc1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/VBF_first_jet_eta_plot.png}
+        \caption{Histogram of $\eta$ of the leading VBF jet}
+        \label{fig:roc2}
+    \end{subfigure}
+    \caption{Histograms of the leading b-jet's b-tagging score and of $\eta$ of the leading VBF jet for all four classes}
+    \label{fig:19}
+\end{figure}
+
+Fig. \ref{fig:19} shows the b-tagging score of the leading b-jet. It can be seen that the b-taggng score is lower for the non-resonant background than for the other three classes, where 
+the b-tagging score shows a similar distribution. This can be explained with the fact that in the non-resoannt background the jets are often misidentified as b-jets, which shows in the b-tagging score.
+When studying the $\eta$-distribution of the first VBF jet it can be clearly seen that for the VBF events the absolute value of $\eta$ is larger, since these are the jets originating from the two beam quarks,
+whilst for the other classes two random jets with the highest dijet invariant mass are chosen, so they are not mostly radiated close to the beam. \\
+
 Furthermore angular variables between different objects are also taken into account. The angular distances $\Delta R$ between each photon and jet of the diphoton and dijet pair 
 and between the two VBF jets and each of the two photons and b-jets are used, together with the minimal angular distance between a photon and a b-jet ($\Delta R_{min}^{\gamma b}$), between a VBF-jet and a photon
-($\Delta R_{min}^{j \gamma}$) and between a VBF-jet and a b-jet ($\Delta R_{min}^{j b}$).
+($\Delta R_{min}^{j \gamma}$) and between a VBF-jet and a b-jet ($\Delta R_{min}^{j b}$). The histogram of the minimal angular distance between a photon and a b-jet \ref{fig:20} shows that this variable
+has the widest distribution for the two signal classes, since here the photon and the b-jet actually are radiated from two independet Higgs bosons, whilst for the non-resonant background for example
+these objects could be radiated in a closer angle to each other.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/DeltaR_jg_min_plot Kopie.png}
+        \caption{Histogram of $\Delta R_{min}^{j \gamma}$}
+        \label{fig:roc1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/absCosThetaStar_CS_plot Kopie.png}
+        \caption{Histogram of $cos(\theta_{CS}^*)$}
+        \label{fig:roc2}
+    \end{subfigure}
+    \caption{Histograms of $\Delta R_{min}^{j \gamma}$ and $cos(\theta_{CS}^*)$ for all four classes}
+    \label{fig:20}
+\end{figure}
+
 Also the helicity angles $cos(\theta_{\gamma \gamma})$ between the two photons, $cos(\theta_{bb})$ between the two b-jets and the Collins-Soper angle $cos(\theta_{CS}^*)$ are stated.
 The Collins-Soper angle is the angle between the $H \rightarrow \gamma \gamma$ candidate~\cite{Run2analysisnote} and the Collins-Soper reference frame, where the z-axis goes along the beam axis~\cite{CSangle}.
-Moreover the MET-variables $MET \phi$, $MET p_T$, $\Delta \phi (MET, b_1)$ and $\Delta \phi (MET, b_2)$ are used. The $M_X$ variable is stated for the four body mass,
+In Fig. \ref{fig:20} it can be seen that the Higgs boson from the VBF-jet is radiated closely to the beam, whilst in ggF and $t \bar{t} H$ the direction of the $H \rightarrow \gamma \gamma$ candidate is arbitrary.
+Moreover the MET-variables $MET \phi$, $MET p_T$, $\Delta \phi (MET, b_1)$ and $\Delta \phi (MET, b_2)$ are used. If the $\Delta \phi (MET, b_1)$ variables distribution peaks at zero it means 
+that the MET mostly comes from an incorrect energy estimation of the considered object, whilst a wider distribution indicates particles that were not detected, e. g. neutrinos which can occur
+in the $t \bar{t} H$ background by the decay of the W bosons. In Fig. \ref{fig:21} it can be seen that the distribution is the widest for the two background classes.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/DeltaPhi_j1MET_plot.png}
+        \caption{Histogram of $\Delta \phi (MET, b_1)$}
+        \label{fig:roc1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/n_leptons_plot.png}
+        \caption{Histogram of the number of leptons}
+        \label{fig:roc2}
+    \end{subfigure}
+    \caption{Histogram of $\Delta \phi (MET, b_1)$ and of the number of leptons for all four classes}
+    \label{fig:21}
+\end{figure}
+
+The number of leptons (Fig. \ref{fig:21}) shows that even in the signal classes, the number of leptons is not negligible, which is caused by an inaccurate lepton identification since
+there are not any leptons in the signal events. For that reason the leptonic variables are also used as an input for the MLP, because otherwise a large number of events could not be used for classification.
+The $M_X$ variable is stated for the four body mass,
 
 \eqn{
     M_X = M(bb \gamma \gamma) - M(bb) - M(\gamma \gamma) + 2M_H
@@ -139,31 +237,45 @@ where $M_H = 125$ GeV is the Higgs mass~\cite{Run2analysisnote}. To reject those
     \chi_{t0}^2 = \bigl( \frac{m_w-m_{jj}}{0.1 \cdot m_w} \bigr)^2 +  \bigl( \frac{m_t-m_{bjj}}{0.1 \cdot m_t}\bigr)^2
 }
 
-and the $\chi_{t1}$-variable for events with six jets or more is used,
+is used, where $m_w=80.377$ GeV is the mass of a W-boson and $m_t=172.76$ GeV is the topquark's mass~\cite{Run2analysisnote}.
+If one of the top quark decays into a W boson and a b-quark, and the W boson then decays further into a quark-antiquark pair, the according masses will align. So this variable 
+will be $0$, if there actually is a quark-antiquark decay of the W boson in the $t \bar{t}H$-background. The distribution of $\chi_{t0}$ is shown in Fig. \ref{fig:22}, where it can
+be seen that the distribution for the $t \bar{t}H$-background is in fact the most slim.
+
+For events with six jets or more and the $\chi_{t1}$-variable is used.
 
 \eqn{
     \chi_{t1}^2 = \bigl(\frac{m_w - m_{jj, 1}}{0.1 \cdot m_w} \bigr)^2 + \bigl(\frac{m_t-m_{bjj, 1}}{0.1 \cdot m_t} \bigr)^2 + \bigl(\frac{m_w - m_{jj, 2}}{0.1 \cdot m_w} \bigr)^2 + \bigl(\frac{m_t-m_{bjj, 2}}{0.1 \cdot m_t} \bigr)^2
 }
 
-where $m_w=80.377$ GeV is the mass of a W-boson and $m_t=172.76$ GeV is the topquark's mass~\cite{Run2analysisnote}.
-The centrality variable that relates the direction of the VBF-jets to that of the Higgs candidates is defined as follows,
+This variable is used to identify both W bosons decay into a quark-antiquark pair, so the terms of $\chi_{t0}$ are applied for the decay products of both W bosons and therefore for both top quarks.
+The centrality variable that relates the direction of the VBF-jets to that of the Higgs candidates is defined as follows
 
 \eqn{
     C_H = exp \biggl[ - \frac{4}{(\eta_1^{VBF} - \eta_2^{VBF})^2} \bigl( \eta^H - \frac{\eta_1^{VBF} + \eta_2^{VBF}}{2} \bigr)^2 \biggr]
 }
 
-for both of the Higgs candidates this is used as an input~\cite{CMS:2021qbp}. \\
+For both of the Higgs candidates this is used as an input~\cite{CMS:2021qbp}, where $C_{bb}$ is the centrality ariable for the two b-jets and $C_{\gamma \gamma}$ is the variable for the diphoton candidate.
+This variable will be $1$ when the Higgs boson is radiated into the same $\eta$-region as the VBF jets. Since this is a characteristic
+behaviour for VBF events this variable is stated to identify these events. \\
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/chi_t0_plot.png}
+        \caption{Histogram of $\chi_{t0}$}
+        \label{fig:roc1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/VBF_Cbb_plot.png}
+        \caption{Histogram of $C_{bb}$}
+        \label{fig:roc2}
+    \end{subfigure}
+    \caption{Histograms of $\chi_{t0}$ and $C_{bb}$ for all four classes}
+    \label{fig:22}
+\end{figure}
 
-% "chi_t0",
-% "chi_t1",
-
-% "VBF_first_jet_btagPNetQvG",
-% "VBF_second_jet_btagPNetQvG",
-
-% "VBF_jet_eta_prod",
-% "VBF_jet_eta_diff",
-% "VBF_jet_eta_sum",
-
-% "VBF_Cgg",
-% "VBF_Cbb"
+In Fig. \ref{fig:22} it can be clearly observed that the distribution of $C_{bb}$ peaks at one for the VBF events, whilst this variable is more equally distributed for the other three classes.

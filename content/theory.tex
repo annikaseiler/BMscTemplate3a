@@ -9,44 +9,14 @@ is broken spontaneously while preserving gauge symmetry, which allows mass gener
 to the vacuum expectation value of the Higgs-field~\cite{HandbookLHC}, so the verification of this relation is a crucial test for the consistency of the BEH mechanism with the SM. 
 The discovery of the Higgs boson provided first experimental evidence of this mechanism~\cite{Guerrero:2021}.\\
 
-% The Standardmodel of particle physics describes the strong, weak and electromagnetic interaction and introduces the elementary particles. The elementary particles are grouped into 
-% fermions, which include all quarks and leptons, and bosons, which carry the elemntary forces. The SM predicts that the vector bosons and fermions are massless, but in fact their masses can be measured.
-% The Brout-Englert-Higgs mechanism solves this contradiction: The discovered Higgs boson creates a symmetric scalar field $V$ with an asymmetric minimum at $v=246 GeV$. 
-% Because of the radial symmetry of the Higgs field, there are multiple lowest-energy states. When a particle couples to the Higgs field, one of these states is entered 
-% and the symmetry is spontaneously broken. This adds interaction terms in the Lagrangian of the Higgs field which then lead to mass terms for the fermions and vector bosons.
-% Through this mechanism a mass for fermions and vector bosons is assigned without breaking the global symmetry of the Higgs field.
-
-
 \subsection{Higgs boson pair production}
 \label{sec:sig_processes}
 
 There are two main production modes for di-Higgs and therefore for $HH \rightarrow b \bar{b} \gamma \gamma$: Vector boson fusion (VBF) and gluon gluon fusion (ggF). 
-The feynman graphs contributing to VBF are shown in Fig. \ref{fig:1}, the feynman graphs for ggF are presented in Fig. \ref{fig:2}. \\
+The feynman graphs contributing to VBF are shown in Fig. \ref{fig:14}, the feynman graphs for ggF are presented in Fig. \ref{fig:15}. \\
 
-\begin{fmffile}{feynman}
-    \begin{fmfgraph}(150,100)
-        \fmfleft{i1,i2}  
-        \fmfright{o1, o2}   
-        
-        \fmf{gluon}{i1,v1}
-        \fmf{gluon}{i2,v2}
-
-        \fmf{fermion}{v2,v1}
-        \fmf{fermion}{v1,v3}
-        \fmf{fermion}{v3,v2}
-       
-        \fmf{dashes}{v2,o1}
-        \fmf{dashes}{v3,o2}
-        
-        \fmflabel{g}{i1}
-        \fmflabel{g}{i2}
-        \fmflabel{H}{o1}
-        \fmflabel{H}{o2}
-    \end{fmfgraph}
-\end{fmffile}
-
-% \Figure{H}{0.8}{fig:1}{Feynman graphs VBF}{ - The three production modes of di-Higgs via VBF.}{content/Plots/Feynman_VBF.png}
-% \Figure{H}{0.8}{fig:2}{Feynman graphs ggF}{ - The production modes of di-Higgs via ggF. The upper diagrams correspond to SM processes while the lower ones correspond to BSM processes.}{content/Plots/Feynman_ggF.png}
+\Figure{H}{0.6}{fig:14}{Feynman graphs ggF}{ - Exemplary production modes of HH via ggF. Image taken from~\cite{CMS:2022Higgs}}{content/Plots/Feynman_ggF.png}
+\Figure{H}{0.9}{fig:15}{Feynman graphs VBF}{ - Exemplary production modes of HH via VBF. Image taken from~\cite{CMS:2022Higgs}}{content/Plots/Feynman_VBF.png}
 
 The ggF production modes allow access to five different couplings, where $\lambda_{HHH}$ and $y_t$ belong to SM processes and $c_2$, $c_{2g}$ and $c_{g}$ only occur in BSM processes.
 $\lambda_{HHH}$ describes the trilinear self-coupling of the Higgs boson and $y_t$ the top Yukawa coupling. The interaction between two Higgs bosons and two top quarks is described by $c_2$.
@@ -58,7 +28,6 @@ The the HVV coupling $c_V$ and the HHVV coupling $c_{2V}$ are introduced for the
 \subsection{The CMS detector}
 \label{sec:cms_det}
 
-% The CMS detector which is operated at the Large Hadron Collider (LHC) at CERN sits around 100m underground, has a length of 21.6m and a diameter of 14.6m.
 The centerpiece of the CMS detector is the 4-T superconducting solenoid, which allows track reconstruction of high energetic charged particles by bending the trajectories. The tracker,
 the electromagnetic calorimeter (ECAL) and the hadronic calorimeter (HCAL) are placed inside the superconductiong solenoid. The muon chambers are located outside the solenoid and are embedded in the steel return yokes~\cite{CMS:2008}. \\
 
@@ -79,29 +48,3 @@ Hadrons are identified at last after muons, electrons and isolated photons have 
 If several energy deposits in the calorimeters are close to each other, it is highly likely that they originate from the same object and are therefore grouped into clusters.
 Clusters not linked to any track are assigned as photons if they are in the ECAL and as neutral hadrons if they are in the HCAL. 
 Correspondingly clusters that are linked to a track must come from charged particles like electrons or charged hadrons~\cite{CMS:2017pf}. 
-
-% The PF algorithm combines the collected data from different detector areas and summarizes signatures that are so close to
-% each other that they probably originated from the same particle or the same jet into so-called superclusters. To identify jets the information from the ECAL and HCAL are sufficient; isolated photons or electrons are identified by clustering in the ECAL~\cite{CMS:2017pf}.
-
-
-
-% It selects events based on the 
-% Another important part of the detector is the trigger system. Since two bunches collide every 25ns the trigger needs to operate very fast. To persue this goal a hi 
-% Saving all the data from all the events would not only be impossible since the amount of data generated is far too large, but it is also not necessary
-% because most of the time we are only interested in a few processes happening. The trigger system solves this issue: F
-
-% and builds regional e/$\gamma$ candidates
-
-% This is an example for a citation:
-% The Higgs boson, discovered by the ATLAS and CMS collaborations at the CERN Large Hadron Collider (LHC) in 2012~\cite{ATLAS:2012yve,CMS:2012qbp}, is the only elementary scalar boson in the standard model.
-
-% Particle detectors are very nice~\cite{Kolanoski:2016gyf}.
-
-% PhD students at RWTH Aachen University have produced some nice theses in the past~\cite{Rieger:2019rgc}.
-% It is also possible to cite bachelor's theses~\cite{example_Bsc_thesis} or master's theses~\cite{example_Msc_thesis}.
-
-% CMS releases some nice results for conferences~\cite{CMS-PAS-SMP-22-009}.
-
-% Theoreticians also release nice, thick summary documents~\cite{LHCHiggsCrossSectionWorkingGroup:2016ypw}.
-
-% You can also cite websites~\cite{Guardian}, although you should usually refer to trusted scientific articles and books\dots
