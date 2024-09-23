@@ -51,7 +51,7 @@
 \input{content/preperations.tex}
 
 % deep learning
-\newpage
+\clearpage
 \thispagestyle{plain}
 \input{content/deeplearning.tex}
 
@@ -66,12 +66,17 @@
 \thispagestyle{plain}
 \input{content/conclusion.tex}
 
+% \newpage
+% \thispagestyle{plain}
+% \input{content/appendix.tex}
+
 % appendix
 \begin{appendix}
 	% appendix sections should look like this
-	% \pageshift
-	% \thispagestyle{plain}
-	% \Section{Foo}\label{sec:apx_foo}
+	\pageshift
+	\thispagestyle{plain}
+	\input{content/appendix.tex}
+	% Section{Foo}\label{sec:apx_foo}
 	% Foo.
 \end{appendix}
 
@@ -99,4 +104,4 @@
 % \selectlanguage{ngerman}
 % \input{content/acknowledgment.tex}
 
-\includepdf[pages=-]{documents/Eid_Versicherung.pdf}
+% \includepdf[pages=-]{documents/Eid_Versicherung.pdf}

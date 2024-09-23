@@ -3,8 +3,8 @@
 
 \subsection*{Graph Attention Network}
 
-In this thesis a Graph Attention Network (GAT) was built to perform the signal background classification. Since the model does not show a performance that refelcts a GAT's potential
-because the optimization of the network could not be finished in time, the results of this classification are presented in the appendix. \\
+In this thesis a Graph Attention Network (GAT) was built to perform the signal background classification. The model does not show a performance that refelcts a GAT's potential
+because the optimization of the network could not be finished due to time constraints, so the results of this classification are presented in the appendix. \\
 
 A GAT is a more complex neural network that is structured very different from the MLP. Here each node represents an object and each object is described by a set of features. 
 In this theses a fully connected network is used, that means that all nodes are connected, where each connection is called an edge.
@@ -59,14 +59,183 @@ The hidden dimenson was chosen as $64$ and two layers of a GAT are applied on th
     \hline
 }
 
-The loss plot of the GAT can be seen in Fig.???, the accuracy plot is presented in Fig. ???. It can be seen that the accuracy flucuates a lot for the validation data set, so the model seems to have problems
-with generalizing the data. The best achieved results for the validation data are:
+The loss plot of the GAT can be seen in Fig. \ref{fig:23}, the accuracy plot is presented in Fig. \ref{fig:24}. It can be seen that the accuracy flucuates a lot for the validation data set, so the model seems to have problems
+with generalizing the data.
+
+\Figure{htbp}{0.8}{fig:23}{Loss plot of the GAT}{ }{content/Plots/performance_GAT/loss_plot.png}
+\Figure{htbp}{0.8}{fig:24}{Accuracy plot of the GAT}{ }{content/Plots/performance_GAT/acc_plot.png}
+
+The best achieved results for the validation data are:
 
 \eqn{
     \mathcal{L} = 0.8888\\
     acc = 0.9162
 }
 
-It can be seen that both values are significantly worse then those from the MLP. The confusion matrix can be seen in Fig. ???, the ROC one vs. all in Fig. ??? and the ROC one vs. one in Fig. ???
+It can be seen that both values are significantly worse than those from the MLP. The confusion matrix can be seen in Fig. \ref{fig:25} and the ROC one vs. all in Fig. \ref{fig:26}. Both curves are calculated
+accordingly to what was described when presenting these plots for the MLP.
 
-The performance of the GAT cannot yet be conclusively evaluated since the model was not further optimized and the choice of hyerparameters have a large influence on the model's performane.
+\Figure{htbp}{0.8}{fig:25}{Confusion matrix of the GAT}{ }{content/Plots/performance_GAT/cm_plot.png}
+\Figure{htbp}{0.8}{fig:26}{ROC one vs. all of the GAT}{ }{content/Plots/performance_GAT/roc_plot.png}
+
+It can be clearly observed that the signal classes are not well identified at all. Especially for VBF the confusion with the other classes is very high. In the ROC curve it can be seen
+as well that the AUC values are small compared to the MLP.
+
+The results using the test data set are 
+\eqn{
+    \mathcal{L} = 1.0815\\
+    acc = 0.6532
+}
+
+For the just presented GAT it can be conclusively said, that the preformance is significantly worse than the one from the MLP. Only around $50 \%$ of the signal classes are correctly identified, so the
+just presented model is not suitable to perform the classification task.
+Nevertheless the performance of the GAT cannot yet be conclusively evaluated since the model was not further optimized and the choice of hyerparameters have a large influence on the model's performane.
+Using a Graph attention network is a promising approach to perform the signal background classification in the $HH \rightarrow b \bar{b} \gamma \gamma$ decay channel, because the network can learn by itself
+the relations between the objects and the number of objects per event is variable. Studying this network further for this specific signal-background classification is a promising approach.
+
+\subsection*{Performance plots with increased class weights}
+
+In this chapter the loss, accuracy, ROC one vs. all, ROC one vs. one and the condusion matrix are presented for all tested factors by which the signal weights for training are increased.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance2/loss_plot.png}
+        \caption{Loss plot}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance2/acc_plot.png}
+        \caption{Accuracy plot}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance2/roc_plot.png}
+        \caption{ROC one vs. all}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance2/combined_roc_curves.png}
+        \caption{ROC one vs. one}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance2/cm_plot.png}
+        \caption{Confusion matrix}
+    \end{subfigure}
+    \caption{All plots that show the performance of the MLP with a weight increase of $2$.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance3/loss_plot.png}
+        \caption{Loss plot}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance3/acc_plot.png}
+        \caption{Accuracy plot}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance3/roc_plot.png}
+        \caption{ROC one vs. all}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance3/combined_roc_curves.png}
+        \caption{ROC one vs. one}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance3/cm_plot.png}
+        \caption{Confusion matrix}
+    \end{subfigure}
+    \caption{All plots that show the performance of the MLP with a weight increase of $3$.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance5/loss_plot.png}
+        \caption{Loss plot}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance5/acc_plot.png}
+        \caption{Accuracy plot}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance5/roc_plot.png}
+        \caption{ROC one vs. all}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance5/combined_roc_curves.png}
+        \caption{ROC one vs. one}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance5/cm_plot.png}
+        \caption{Confusion matrix}
+    \end{subfigure}
+    \caption{All plots that show the performance of the MLP with a weight increase of $5$.}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance10/loss_plot.png}
+        \caption{Loss plot}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance10/acc_plot.png}
+        \caption{Accuracy plot}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance10/roc_plot.png}
+        \caption{ROC one vs. all}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance10/combined_roc_curves.png}
+        \caption{ROC one vs. one}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{content/Plots/performance10/cm_plot.png}
+        \caption{Confusion matrix}
+    \end{subfigure}
+    \caption{All plots that show the performance of the MLP with a weight increase of $10$.}
+\end{figure}
+
+
+% \subsection*{Histograms of selected input variables}
+% In the following histograms of variables used as input for the MLP for all four classes are presented. 
+% Concretly, histograms for the following variables are shown:
+% \begin{itemize}
+%     \item helicity angles $cos(\theta_{bb})$ and $cos(\theta_{\gamma \gamma})$
+%     \item angular distances between the selected photons and b-jets $\Delta R_{b \gamma}$
+%     \item $p_T$, $\eta$ and $\phi$ for jet 1 (jet with the highest $p_T$)
+%     \item diphoton $\frac{p_T^{\gamma \gamma}}{m_{\gamma \gamma jj}}$
+%     \item first and second jet \frac{p_T^b}{m_{bb}}
+%     \item photon sublead \frac{p_T^{\gamma}}{m_{\gamma \gamma}}
+%     \item lead pt eta phi mvaid
+%     \item pt and phi of MET
+%     \item min angular distance vbf photon
+%     \item min angular distance vbf b jet
+%     \item vbf first jet qvg, phi, pt, pt over m
+% \end{itemize}
+

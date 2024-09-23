@@ -1,18 +1,18 @@
 \section*{Abstract}
 
-This work presents a signal-background classification for the $HH \rightarrow bb \gamma \gamma$ search using a multilayer perceptron (MLP).
+This work presents a signal-background classification for the $HH \rightarrow b \bar{b} \gamma \gamma$ search using a multilayer perceptron (MLP).
 The two production modes of the Higgs boson pair, gluon-gluon fusion (ggF) and vector boson fusion (VBF), are distinguished from both the associated
 top-quark production process $t \bar{t} H$ and the non-resonant background processes, which include $\gamma$+jets and $\gamma \gamma$+jets final states.
 The hyperparameters of the MLP are optimized using both Bayesian optimization and random search. The minimal validation loss achieved by both algorithms
-shows no significant difference, though the random search proves to be more efficient. \\
+shows no significant difference, although Bayesian optimization is a considerably more complex algorithm. \\
 
-The MLP achieves its best performance in identifying the non-resonant background, with an area under the curve (AUC) of 0.9949 for the one-vs-all
-receiver operating characteristic (ROC) curve. This is followed by its performance in identifying the $t \bar{t} H$ background,
-where an AUC of 0.9768 is obtained.
-For the ggF and VBF signal classes, AUC values of 0.9391 and 0.9495, respectively, are achieved.The primary challenge lies in distinguishing between the two
+The MLP achieves its best performance in identifying the non-resonant background, with an area under the curve (AUC) of $0.9949$ for the one-vs-all
+receiver operating characteristic (ROC) curve, where each class is compared against all others. This is followed by its performance in identifying the $t \bar{t} H$ background,
+where an AUC of $0.9768$ is obtained.
+For the ggF and VBF signal classes, AUC values of $0.9391$ and $0.9495$, respectively, are achieved. The primary challenge lies in distinguishing between the two
 signal classes (ggF and VBF).
 Adjusting the training weights for the signal classes does not lead to any notable improvement. \\
 
-When analyzing the misclassifications—where gluon-gluon fusion events are identified as vector boson fusion and vice versa—it becomes evident
-that the Collins-Soper angle, the $\eta$ distribution of the VBF jets, the angular separations between photon and b-jet candidates, and various
-kinematic properties of the photons and b-jets are the most significant factors contributing to the misidentification.
+When analyzing the misclassifications — where gluon-gluon fusion events are identified as vector boson fusion and vice versa — it becomes evident
+that the distribution of the Collins-Soper angle, the $\eta$ distribution of the VBF jets, the angular separations between photon and b-jet candidates, and various
+kinematic properties of the photons and b-jets are significant factors contributing to the misidentification.

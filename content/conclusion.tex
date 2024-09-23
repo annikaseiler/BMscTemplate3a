@@ -10,15 +10,15 @@ can be detected with high mass resolution. The dominant background processes in 
 decays into two photons. If each top quark decays into a vector boson and a b-quark, the resulting final state consists of two photons and two b-jets with kinematics similar to the signal.
 The second background class is the non-resonant background, which includes $\gamma$+jets and $\gamma\gamma$+jets events. \\
 
-To distinguish the two di-Higgs production modes from background processes in the $b \bar{b} \gamma \gamma$ decay channel, a multiclass classification using a multi-layer perceptron (MLP) was performed.
+To distinguish the two di-Higgs production modes from background processes in the $b \bar{b} \gamma \gamma$ decay channel, a multiclass classification using a deep neural network was performed.
 The neural network's performance depends on the hyperparameters, which were optimized using both Bayesian optimization and random search algorithms to minimize the loss function.
-A comparison of the two methods revealed that Bayesian optimization achieved only a marginally better loss value, indicating that random search is sufficient for this study. \\
+A comparison of the two methods revealed that Bayesian optimization achieved only a marginally better loss value, indicating that a random search is sufficient for this study. \\
 
 The performance of the MLP was evaluated using ROC curves and confusion matrices, showing that the non-resonant background could be most effectively distinguished from the other classes, consistent with
 the fact that its kinematics differ the most from the signal. The $t \bar{t} H$ background was also well identified. However, two major sources of
 misclassification were identified: First, the model frequently misclassified ggF signal events as $t \bar{t} H$ background, while the misidentification between VBF and $t \bar{t} H$ was less pronounced. This can be explained by the greater kinematic similarity between ggF and $t \bar{t} H$ compared to VBF and $t \bar{t} H$. 
 In many VBF production modes, the Higgs bosons tend to be produced along the beam axis, while in the ggF and $t \bar{t} H$ processes, the direction of the Higgs bosons relative to the beam axis
-is more arbitrary. Second, the two signal classes, ggF and VBF, were often confused. Increasing the weights of the signal classes during training did not resolve this issue, as seen in the AUC values. \\
+is more widely distributed. Second, the two signal classes, ggF and VBF, were often confused. Increasing the weights of the signal classes during training did not resolve this issue, as seen in the AUC values. \\
 
 To better understand these misclassifications, distributions of ggF events identified as VBF and VBF events identified as ggF were compared to inclusive ggF and VBF samples. It was found that variables
 such as the Collins-Soper angle, the $\eta$ distributions of the VBF-tagged jets and the transverse momenta scaled by the invariant masses of the decay products play a major role in the misclassification. \\

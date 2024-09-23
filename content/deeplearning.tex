@@ -1,38 +1,136 @@
 \Section{Signal-background classification using machine learning}
 \label{sec:deepl}
 
+The classification task for the signal and background processes presented in the previous section is performed with a multilayer perceptron,
+the structure of which is described in this section.
+
 \subsection{Multilayer Perceptron}
 \label{sec:funcmlp}
 
-An MLP is the simpliest form of a feedforward neural network and consits of several layers, where each layer consits of a set of nodes. In the first layer each node represents an input feature, the output layer consits of four nodes where each node represents one class of events
-and the layers in between are called hidden layers. The mathematical operation that connects the different layers
-is a matrix multiplication, where the entrys of the matrix are called weights, whose values will be optimized by the nerual network. In order to learn complex
-relations, there needs to be a non-linear operation applied after each layer. Otherwise, there would just be a series of linear operations, which would be nothing else
-than one big linear operation. Common choices for activation functions are the ReLU, ELU oder SELU activation function. After the last hidden layer a softmax activation function is applied,
-which creates values between 0 and 1 for each class, where all four values add up to 1. The labels are correspondingly one-hot encoded. \\
+A Multilayer Perceptron (MLP) is the simplest form of a feedforward neural network and consists of several layers, with each layer containing a set of nodes.
+The first layer is formed by the input data of the network, while the last layer represents the network's output. The intermediate layers are referred to as hidden layers.
+The mathematical operation that connects the different layers and nodes is a matrix multiplication with the so-called weight matrix $\textbf{W}$,
 
-The performance of a neural network is measured with a loss function, that will be minimized in the learning process. In this thesis the cross-entropy loss, 
+\eqn{
+    \vec{y} = \textbf{W} \vec{x} + \vec{b}
+}
+
+where $\vec{y}$ represents the nodes of the first hidden layer, $\vec{x}$ is the vector of input nodes and $\vec{b}$ is a vector of displacement parameters named bias.
+The entries of $\textbf{W}$, denoted as $W_{ij}$, are optimized by the neural network. To learn complex relationships, a non-linear operation must be applied after each layer, known as the activation function. Without this non-linearity,
+the network would merely perform a sequence of linear operations, equivalent to a single large linear operation. \\
+
+The input data is split into smaller subsets, known as minibatches (or simply batches), and the model is trained on one batch at a time. Once the model has processed all the input data,
+a complete cycle of training is finished, which is referred to as an epoch. \\
+%Common choices for activation functions are the ReLU, ELU oder SELU activation function. \\
+
+To evaluate the quality of the model's predictions, a loss function is used. This function is minimized when the model's predictions align with the true labels.
+The loss function determines how the weights need to be adjusted to improve performance. Specifically, the weights are updated through backpropagation of the loss: the partial derivative of the loss
+is computed with respect to the weight parameters, allowing the model to learn how to adjust the weights to minimize the loss. An example of backpropagation for two network layers is given by:
+
+\eqn{
+    \frac{\partial \mathcal{L}}{\partial W} = \frac{\partial \mathcal{L}}{\partial z_2} \cdot \frac{\partial z_2}{\partial z_1} \cdot \frac{\partial z_1}{\partial W}
+}
+
+with $z_1 = \textbf{W} \cdot x$, $z_2 = \sigma (z_1)$ and $\mathcal{L} = (y - z_2)^2$. 
+To update the weight parameters based on the loss, the rate at which the weights are adjusted must be determined, which is controlled by the learning rate $\alpha$:
+
+\eqn{
+    W_{t+1} = W_t - \alpha E \bigg[\frac{\partial \mathcal{L}}{\partial W}\bigg]_t
+}
+
+To optimize the training process, an adaptive learning rate can be employed, which decreases if no reduction in the loss function is observed.
+Various optimizers can be used for this task. Once the weights have been updated, a new training epoch begins. \\
+
+There are additional techniques to further enhance the training process: Regularization prevents that the weights are set to numerically large numbers for example by adding either the absolute value
+or the squared value of the weights to the loss function, multiplied by a regularization parameter. To create different network architectures a dropout can be implemented, in which random nodes are excluded
+from training, and early stopping halts the training when no further improvement in the loss is observed, making the training more efficient.
+A learning rate scheduler can also be implemented, which reduces the learning rate after a certain number of epochs without improvement, and this new learning rate is passed to the optimizer. \\
+
+Eventually, the loss will no longer decrease, indicating that the optimal weights have been found. Additionally, model performance is evaluated using accuracy,
+which is defined as the ratio of correctly classified events to the total number of events.\\
+
+\subsection{Implemented network architecture}
+\label{sec:funcmlp2}
+
+In this thesis, each input node of the MLP represents one feature, and each output node corresponds to one class. There are four classes: two signal classes,
+VBF and ggF, and two background classes, $t \bar{t} H$ and the non-resonant background. The output of the MLP is in a one-hot encoded form: for each class, a value between $0$ and $1$ is given,
+where all four values sum to one. The higher the value for a particular class, the more strongly the event is assigned to that class. Mathematically, this output format is achieved by applying a
+softmax activation function after the last hidden layer. \\
+
+The objective function used is the cross-entropy loss:
 
 \eqn{
     \mathcal{L} = - \frac{1}{k} \sum_{i=1}^{k} \vec{p}^T(\vec{x}_i) log \vec{q} (\vec{x}_i)
 }
 
-where $k$ is the batch size, $m$ is the number of classes, $\vec{x_i}$ are the data, $\vec{p}$ are the true class labels and $\vec{q}$ are the models predictions.
-The weights of the model then are updatet through backpropagation of the loss: The partial derivative of the loss is calculated with respect of the weight parameters, so the model can learn how to
-vary the weights in order to minimize the loss. Once the weights have been updated a new training epoch is started.
-Eventually the loss will not improve anymore, that is when the optimal weights are found. In addition the performance is checked with the accuracy, which is
-defined as the ratio between the correct classified events and the number of all events. \\
+where $k$ is the batch size, $m$ is the number of classes, $\vec{x_i}$ are the data, $\vec{p}$ are the true class labels and $\vec{q}$ are the model's predictions.
 
-Before the model can be trained the input data need to be prepared. First an a standradization that transformes the data into the same order of magnitude is applied, because the values of the input data vary in wide ranges.
-Second the data is split into a train, validation and test set. The model is trained with the training data set, then after each epoch the model is applied on the validation data to check the models performance on unseen data.
-The validation data set is indirectly involved in the training, because the selected model is the one with the best validation loss and the hyperparameter optimization involves the models performance on the validation data.
-When the training and hyperparameter tuning is complete, the performance of the model is checked with the test data set. Finally the model does not see all the training data at once, instead the training data is splitted into mini batches (short: batch),
-which are transferred to the model one after the other. After each batch the loss is calculated and the weights are then updated through backpropagation. \\
+Before the model can be trained, the input data need to be preprocessed. First, the data are split into training, validation, and test sets with a ratio of $0.6$, $0.2$, and $0.2$, respectively.
+Next, standardization is performed based on the training dataset: for the training data, the mean $\langle x_i \rangle$ and standard deviation $\sigma_i$ are calculated for each variable.
+The data from all three datasets are then standardized using these values:
 
-The hyperparameters have a large influence on the model's performance. The learning rate decides, how fast the weights are changed, the schedueler adapts the learning rate throughout the training
-and the the weight decay prevents that the weights are set
-to numerically large numbers. A dropout excludes a certain percentage of random nodes after each layer, to create different network architechtures and finally early stopping can be used, which stops the training process when the validation loss 
-did not improve over a certain number of epochs and prevents overtraining~\cite{DL:2021}. 
+\eqn{
+    x_{i, stand.} = \frac{x_i - \langle x_i \rangle}{\sigma_i}
+}
+
+where the index $i$ refers to the respective variable. The weight parameters are initialized using a Gaussian distribution with a mean of $0$ and a standard deviation of $1$.
+The optimizer used is the Adam optimizer, which provides both a term that determines the direction of the next step in parameter space and a term that adapts the learning rate. \\
+
+As discussed in Chapter \ref{sec:HiggsDNA}, there is an unequal number of events for each class, with significantly more non-resonant background events than events from other classes. As a result,
+the model may tend to favor the non-resonant background class.
+The aim is for the model to distinguish the classes based solely on the input variables, without allowing the imbalanced event distribution to bias the training process. To address this, different
+weights are assigned to each class and event. \\
+
+Each event is initially assigned an individual weight, normalized by the sum of the weights across all events. This normalized weight is then multiplied by the cross section of the event's class,
+accounting for how frequently an event from each class would be observed in real data. To treat all classes equally, the weights for events in each specific class are then normalized by the sum of all weights
+in that class, ensuring that the sum of weights for each class equals $1$ after normalization. Finally, the weights of events in the training dataset are strictly positive, whereas the weights of events from
+other datasets can be negative. Concretely, the weights are integrated into the training process by calculating the weighted mean of the loss for each batch. For each epoch, the mean of all weighted batch
+losses is used. \\
+
+A batch size of $512$ is used for the training process, with an early stopping patience of $75$ epochs and a maximum of $400$ epochs. After each epoch, the model's weights are evaluated to check if they yield
+the lowest validation loss achieved so far. If so, these weights are saved and selected as the best model to be used for further performance evaluation. The remaining hyperparameter values will be discussed
+in Sec. \ref{subsec:perfmlp}. \\
+
+
+
+
+% Second the data is split into a train, validation and test set. The model is trained with the training data set, then after each epoch the model is applied on the validation data to check the models performance on unseen data.
+% The validation data set is indirectly involved in the training, because the selected model is the one with the best validation loss and the hyperparameter optimization involves the models performance on the validation data.
+% When the training and hyperparameter tuning is complete, the performance of the model is checked with the test data set. Finally the model does not see all the training data at once, instead the training data is splitted into mini batches (short: batch),
+% which are transferred to the model one after the other. After each batch the loss is calculated and the weights are then updated through backpropagation. \\
+
+% The hyperparameters have a large influence on the model's performance. The learning rate decides, how fast the weights are changed, the schedueler adapts the learning rate throughout the training
+% and the the weight decay prevents that the weights are set
+% to numerically large numbers. A dropout excludes a certain percentage of random nodes after each layer, to create different network architechtures and finally early stopping can be used, which stops the training process when the validation loss 
+% did not improve over a certain number of epochs and prevents overtraining~\cite{DL:2021}. 
+
+% In the MLP studied in this thesis, each node of the first layer represents an input feature. The output layer consists of four nodes, where there is one node for each class; the classes are
+% VBF, ggF, ttH and the non-resonant background. The output of the MLP is in a one-hot encoded form: For each class a value between $0$ and $1$ is given as an output, where all four values add up to one.
+% The higher the value of a particular class, the more strongly the event is assigned to this class. Mathematically this output shape is achieved by applying a softmax activation function after
+% the last hidden layer. 
+
+%Equation!!
+
+% A batch size of $512$ is used, the early stopping patience is $75$ epochs and the maximum
+% number of epochs is $400$. After each epoch it is checked if the weights lead to the highest validation loss that was yet achieved. If that is the case, these weights are saved and selected as the best model,
+% which will be used further to measure the performance. \\
+
+% The data are splitted into a training set, validation set and test set with a ratio of $0.6$, $0.2$ and $0.2$. Then a standardization according to the train data set is performed: For the training data,
+% the mean $\langle x_i \rangle$ and standard deviation $\sigma_i$ are caluclated for each variable. After that the data from all three datasets are standardized with these values,
+
+% \eqn{
+%     x_{i, stand.} = \frac{x_i - \langle x_i \rangle}{\sigma_i}
+% }
+
+% where the index $i$ indicates the variable. \\
+
+% As seen in chapter \ref{sec:HiggsDNA} there is a different number of events for each class and especially there are far more non-resonant background events than events of other classes, so it is likely
+% that the model favors this class. The goal is that the model only differentiates the classes based on the input variables and that an uneven distribution of number of events per class does not 
+% falsify the training process. In order to achieve that, different weights for each class and event are used.
+% First each event has an individual weight, which is normalized with the sum of weights for all events. Then this normalized weight is multiplied with the cross section of the event's class,
+% so it is considered how often an event according to each class would be observed when measuring real data. To treat all classes equally in the next step the weights for each event of a specific class are normalized
+% with the sum of all weights from this class, so the sum of weights for each class equals $1$ after normalization. Finally the weights of events that belong to the training data set are only positive, whilst
+% the weights of events from the other datasets can also be negative. \\
 
 % An MLP is the simpliest form of a feedforward neural network and consits of several layers, where each layer consits of a set of nodes.
 % Each input node represents one feature that is used for training, in this thesis this could be for example $p_T$, $\eta$ or $\phi$ of a particle.
@@ -67,9 +165,9 @@ did not improve over a certain number of epochs and prevents overtraining~\cite{
 \subsection{Hyperparameter Optimization}
 \label{sec:funcgat}
 
-Finding the best hyperparameters is essential for the model's performance. There are different algorithms that aim to persue this goal, in this thesis
+Finding the best hyperparameters is essential for the model's performance. There are different algorithms that aim to pursue this goal, in this thesis
 both Bayesian optimization and random search are used. Allowed ranges or values are specified for each hyperparameter, from which the optimization algorithm then selects the best ones.
-Table \ref{tab:5e} lists all the optimized hyperparameters.
+Table \ref{tab:5e} lists all the hyperparameters used for optimization along with the specified range.
 
 \Table{H}{tab:5e}{Hyperparameters for Optimization}{}{c c}{
     \hline
@@ -85,14 +183,14 @@ Table \ref{tab:5e} lists all the optimized hyperparameters.
 }
 
 For variables for which an interval is specified, the algorithm selects floats that are evenly distributed over the entire interval. For variables with the addition
-'logarithmic', equally distributed values are selected via a logarithmic scale, because the given interval varys over a few orders of magnitude. \\
+'logarithmic', equally distributed values are selected via a logarithmic scale, because the given interval varies over a few orders of magnitude. \\
 
-The random search, performed with the Random Sampler, simply selects random combinations of hyperparameters and observes the achieved loss value. This is carried out for a fixed number of trials and after that the
+The random search, performed with the Random Sampler, selects random combinations of hyperparameters and observes the achieved loss value. This is carried out for a fixed number of trials and after that, the
 hyperparameters that caused the lowest loss value are chosen. Previous trials are not taken into account~\cite{hpalg:2011}. \\
 
 The Bayesian optimization is performed with the Tree of Parzen Estimators (TPE Sampler), which is a probability based model for finding the hyperparameters that minimize the loss.
 The TPE sampler applies two Gaussian mixture models (GMM) on the set of hyperparameters $x$ and their corresponding loss value $y$~\cite{hpsearch:2012}, which represent a probability distribution for the best
-loss depending on the hyperparameters. The GMM $l(x)$ is applied on the set of hyperparameters that are expected to minimize the loss the most and $g(x)$ is applied on all the other datasets. 
+loss depending on the hyperparameters. The GMM $l(x)$ is applied on a group of hyperparameters that are the most promising and therefore are expected to minimize the loss the most. The GMM $g(x)$ is applied on all the other datasets. 
 
 \[
 p(x|y) =
@@ -105,4 +203,6 @@ p(x|y) =
 \]
 
 The loss value $y^*$ is defined in such a way that a fixed percentage $\gamma = p(y < y^*)$ of all value pairs are described with $l(x)$~\cite{hpalg:2011}.
-The optimizer then selects the next set of hyperparameters by maximizing the ratio $l(x)/g(x)$~\cite{hpsearch:2012}. This process is repeated until the loss does not significantly improve anymore.
+The optimizer then selects the next set of hyperparameters by maximizing the ratio $l(x)/g(x)$~\cite{hpsearch:2012}, which favors values that were described with $l(x)$ and
+therefore are most likely to result in the best loss value.
+This process is repeated until the loss does not significantly improve anymore.

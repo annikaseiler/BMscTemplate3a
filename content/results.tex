@@ -1,60 +1,62 @@
 \Section{Results}
 \label{sec:results}
 
+The structure of the deep neural network that performs the classification task and the algorithms used for hyperparameter optimization were outlined in Section \ref{sec:deepl}. Building upon this,
+this section presents the results of the hyperparameter optimization, followed by an analysis of the performance of the deep neural network.
+
 \subsection{Results of the Hyperparameter Optimization}
 \label{subsec:perfmlp}
 
-The hyperparameter optimization is performed both with Bayesian optimization and with random search for $50$ trials to compare both algorithms. For each method the history plot, 
-parallel coordinate plot and parameter importanace plot is presented. The history plot shows the loss value achieved for each trial, where the red line indicates what loss value yet achieved is best.
-The history plot for Bayesian optimization can be seen in Fig. \ref{fig:1}, the one for random search in Fig. \ref{fig:2}. 
+The hyperparameter optimization was conducted using both Bayesian optimization and random search over 50 trials to compare the performance of the two algorithms.
+For each method, the history plot, parallel coordinate plot, and parameter importance plot are presented and explained below. The history plot illustrates the loss value achieved in each trial,
+with a red line indicating the best loss achieved so far. Figures \ref{fig:1} and \ref{fig:2} display the history plots for Bayesian optimization and random search, respectively.
 
-\Figure{H}{0.8}{fig:1}{History plot of Bayesian optimization}{ - The loss value of each trial}{content/Plots/history_plot_bay_final.png}
-\Figure{H}{0.8}{fig:2}{History plot of random search}{ - The loss value of each trial}{content/Plots/history_plot_random_final.png}
+\Figure{htbp}{0.8}{fig:1}{History plot of Bayesian optimization}{ - The loss value of each trial}{content/Plots/history_plot_bay_final.png}
+\Figure{htbp}{0.8}{fig:2}{History plot of random search}{ - The loss value of each trial}{content/Plots/history_plot_random_final.png}
 
-For both algorithms it can be seen that within the first ten trials the loss value 
-is improved rapidly, but soon the loss only improves minimally anymore, so it is not expected that a significantly better result would be achieved after more trials for both algorithms. 
-In addition it can be seen that for the Bayesian optimization many trials achieve a loss value close to the best yet achieved loss. Only in seven out of $50$ trials the
-sampling point led to a loss value that had a larger distance than $0.2$ to the best yet achieved loss. For the random sampler the loss values 
-are equally distributed over a wider loss-range, which visualizes that the Bayesian optimization suggests the next sampling point educated in contrast to the random samper.
-The best validation loss value for the Bayesian optimization,
+For both algorithms, a rapid improvement in the loss value is observed during the first ten trials, after which the improvements become minimal.
+This suggests that a significant improvement in the loss is unlikely beyond the 50 trials for either algorithm. Additionally, the history plot for Bayesian optimization shows that many trials
+yield loss values close to the best loss. In only 7 out of 50 trials did the sampled points result in loss values that deviated by more than 0.2 from the best result. In contrast, random search produced loss
+values more evenly distributed across a wider range, illustrating that Bayesian optimization provides informed sampling points, whereas random search selects points randomly.
+
+The best validation loss for Bayesian optimization,
 
 \eqn{
     \mathcal{L} = 0.8878
 }
 
-was achieved in trial $18$. The lowest validation loss achieved through random search,
+was achieved in trial $18$, while the best loss for random search,
 
 \eqn{
     \mathcal{L} = 0.8891
 }
 
-was reached in trial $27$. 
+was obtained in trial $27$. 
 
-The parallel coordinate plot of the Bayesian optimization is shown in Fig. \ref{fig:3}, the one for the random search in Fig. \ref{fig:4}.
+Figures \ref{fig:3} and \ref{fig:4} show the parallel coordinate plots for Bayesian optimization and random search, respectively. In the parallel coordinate plot, each line represents the
+hyperparameter values used in a single trial, connecting them across the various hyperparameter axes. The color of the lines indicates the corresponding loss value obtained from training the MLP with the specified hyperparameters.
 
-\Figure{H}{0.8}{fig:3}{Parallel coordinate plot of Bayesian optimization}{ - All tested hyperparameter combinations are visualized together with the achieved loss value.}{content/Plots/parallel_coordinate_plot_bayesian.png}
-\Figure{H}{0.8}{fig:4}{Parallel coordinate plot of random search}{ - All tested hyperparameter combinations are visualized together with the achieved loss value.}{content/Plots/parallel_coordinate_plot_random.png}
+\Figure{htbp}{0.8}{fig:3}{Parallel coordinate plot of Bayesian optimization}{ - All tested hyperparameter combinations are visualized together with the achieved loss value.}{content/Plots/parallel_coordinate_plot_bayesian.png}
+\Figure{htbp}{0.8}{fig:4}{Parallel coordinate plot of random search}{ - All tested hyperparameter combinations are visualized together with the achieved loss value.}{content/Plots/parallel_coordinate_plot_random.png}
 
 
-The algorithm of the Bayesian is visualized:
-It can be seen how intervals of hyperparameters, where the loss value is low, are chosen far more often then values, where the loss is higher. When looking at the learning rate for example
-one can observe that in far more trials a value between $1 \cdot 10^{-5}$ and $1 \cdot 10^{-4}$ than between $1 \cdot 10^{-6}$ and $1 \cdot 10^{-5}$ is chosen. Learning rates in the second interval
-lead to a high objective value, so this area is barely exploited. The same behaviour can be seen for the other hyperparameters as well.
-For the random search by contrast such a behaviour can not be observed, hyperparameter combinations with a higher loss seem to be as often tested as combinations with a lower loss and the chosen
-hyperparameter values are equally distributed in the given interval.
+The behavior of Bayesian optimization is clearly depicted: hyperparameter ranges associated with lower loss values are sampled more frequently than those with higher loss values. For example,
+more trials explored a learning rate between $1 \cdot 10^{-5}$ and $1 \cdot 10^{-4}$ compared to the range between $1 \cdot 10^{-6}$ and $1 \cdot 10^{-5}$, as the latter tended to yield higher loss values.
+This pattern is consistently observed for other hyperparameters as well. In contrast, random search shows no such pattern, as it samples hyperparameter combinations with both high and low loss values at similar
+frequencies, resulting in a uniform distribution of the hyperparameters used across the entire allowed range.
 
-Finally the importance of different hyperparameters is shown in Fig. \ref{fig:5} for the Bayesian optimization and in Fig. \ref{fig:6} for the random search.
+The importance of different hyperparameters is illustrated in Figures \ref{fig:5} and \ref{fig:6} for Bayesian optimization and random search, respectively.
 
-\Figure{H}{0.8}{fig:5}{Parameter importance plot of Bayesian optimization}{ - The importance of every optimized hyperparameter on the loss value.}{content/Plots/param_importances_plot_bayesian.png}
-\Figure{H}{0.8}{fig:6}{Parameter importance plot of random search}{ - The importance of every optimized hyperparameter on the loss value.}{content/Plots/param_importance_random.png}
+\Figure{htbp}{0.8}{fig:5}{Parameter importance plot of Bayesian optimization}{ - The importance of every optimized hyperparameter on the loss value.}{content/Plots/param_importances_plot_bayesian.png}
+\Figure{htbp}{0.8}{fig:6}{Parameter importance plot of random search}{ - The importance of every optimized hyperparameter on the loss value.}{content/Plots/param_importance_random.png}
 
-For both algorithms the learning rate is by far the most important hyperparameter with an importance of $70 \%$, followed by the number of layers, dropout probability and weight decay.
-The order of importance of these three hyperparameters varies between the two algoritms, although both algorithms work with the same model. 
-This illustrates a weakness of the determination of hyperparameter importance: The importance is evaluated by changing one hyperparameter of a given hyperparameter set at a time while observing how much the loss changes.
-Depending on the values of the other hyperparameters, the loss will change slightly more or less when one parameter is varied; the result of this variation always depends on the given
-hyperparameter set and this differs between the studies. In both studies the number of nodes and choice of activation function are the least important hyperparameters. \\
+For both algorithms, the learning rate emerges as the most important hyperparameter, with an importance of 70 $\%$, followed by the number of layers, dropout probability, and weight decay.
+In both studies, the number of nodes and choice of activation function were the least influential hyperparameters.
+However, the relative importance of these hyperparameters differs between the two algorithms, despite both using the same model. This highlights a limitation in determining hyperparameter importance:
+It is assessed by varying one hyperparameter at a time while keeping the others fixed, which can cause the observed importance to depend on the specific hyperparameter set. The used hyperparameter set 
+to determine the parameter inportance varies between the two studies. \\
 
-The best hyperparameters for the Bayesian optimization are shown in this Table:
+The best hyperparameters for the Bayesian optimization are presented in this Table:
 
 \Table{H}{tab:5e}{Hyperparameters for Bayesian optimization}{}{c c}{
     \hline
@@ -69,7 +71,7 @@ The best hyperparameters for the Bayesian optimization are shown in this Table:
     \hline
 }
 
-These are the best hyperparameters for the random search:
+Similarly, the best hyperparameters for random search are provided in this Table:
 
 \Table{H}{tab:6e}{Hyperparameters for random search}{}{c c}{
     \hline
@@ -84,110 +86,96 @@ These are the best hyperparameters for the random search:
     \hline
 }
 
-The hyperparameters selected for the two studies are mostly similar. The biggest difference is that the dropout probability is lower for the the random search, while the learning rate is slightly higher here. 
-Since the loss value of the Bayesian optimization is slightly lower than the one of the random search, these hyperparameters are used to train the MLP.
-When comparing Bayesian optimization and random search it can be said that it does not make a large difference which algorithm is used. The loss values only differed in the third decimal place
-and were achieved only nine trials apart. Since the Bayesian optimization is a far more complex algorithm than the random search it can be said that this complexity does not show in the results,
-so in this thesis a random search algorithm would be completely sufficient as well.
+The selected hyperparameters are mostly similar between the two methods. The most notable difference is the lower dropout probability and slightly higher learning rate in the random
+search configuration. Given that Bayesian optimization produced a slightly lower validation loss, these hyperparameters were chosen for the subsequent classification task. 
+Nevertheless, one must be aware that many similar hyperparameter combinations lead to a comparable loss. Performing the hyperparameter optimization again would most likely result in a different set of hyperparameters being selected as the 
+set that minimizes the loss the most. \\
+
+When comparing Bayesian optimization to random search, the difference in performance is minimal, with the best loss values differing only in the third decimal place, and the optimal results were obtained
+within nine trials of each other. Despite Bayesian optimization being a significantly more complex algorithm, its results do not provide a clear advantage over random search. Furthermore, random search allows
+for parallelization of trials, making it faster overall. Since Bayesian optimization relies on the outcome of previous trials to determine the next sampling point, it cannot be parallelized.
+Therefore, while Bayesian optimization is more sophisticated, this complexity did not translate into significantly better results in this study. Thus, random search would have been equally sufficient for
+the purposes of this thesis.
 
 \subsection{Performance of the Neural Network}
 \label{subsec:perfgat}
 
-The results of the Bayesian hyperparameter optimization are chosen as the hyperparameters for the MLP. A batch size of $512$ is used, the early stopping patience is $75$ epochs and the maximum
-number of epochs is $400$. After each epoch it is checked if the weights lead to the highest validation loss that was yet achieved. If that is the case, these weights are saved and selected as the best model,
-which will be used further to measure the performance. \\
+The MLP described in Section \ref{sec:funcmlp2} is trained with the results from the Bayesian hyperparameter optimization presented in Section \ref{subsec:perfmlp}.
+Fig. \ref{fig:7} displays the training and validation loss, while Fig. \ref{fig:8} shows the training and validation accuracy.
 
-The data are splitted into a training set, validation set and test set with a ratio of $0.6$, $0.2$ and $0.2$. Then a standardization according to the train data set is performed: For the training data,
-the mean $\langle x_i \rangle$ and standard deviation $\sigma_i$ are caluclated for each variable. After that the data from all three datasets are standardized with these values,
+\Figure{htbp}{0.8}{fig:7}{Loss plot}{ - Training and validation loss for each epoch.}{content/Plots/performance/loss_plot.png}
+\Figure{htbp}{0.8}{fig:8}{Accuracy plot}{ - Training and validation accuracy for each epoch.}{content/Plots/performance/acc_plot.png}
 
-\eqn{
-    x_{i, stand.} = \frac{x_i - \langle x_i \rangle}{\sigma_i}
-}
-
-where the index $i$ indicates the variable. \\
-
-As seen in chapter \ref{sec:HiggsDNA} there is a different number of events for each class and especially there are far more non-resonant background events than events of other classes, so it is likely
-that the model favors this class. The goal is that the model only differentiates the classes based on the input variables and that an uneven distribution of number of events per class does not 
-falsify the training process. In order to achieve that, different weights for each class and event are used.
-First each event has an individual weight, which is normalized with the sum of weights for all events. Then this normalized weight is multiplied with the cross section of the event's class,
-so it is considered how often an event according to each class would be observed when measuring real data. To treat all classes equally in the next step the weights for each event of a specific class are normalized
-with the sum of all weights from this class, so the sum of weights for each class equals $1$ after normalization. Finally the weights of events that belong to the training data set are only positive, whilst
-the weights of events from the other datasets can also be negative. \\
-
-In Fig. \ref{fig:7} the training and validation loss can be seen, Fig. \ref{fig:8} shows the training and validation accuracy.
-
-\Figure{H}{0.8}{fig:7}{Loss plot}{ - Training and validation loss for each epoch.}{content/Plots/performance/loss_plot.png}
-\Figure{H}{0.8}{fig:8}{Accuracy plot}{ - Training and validation accuracy for each epoch.}{content/Plots/performance/acc_plot.png}
-
-It is noticeable that the validation loss is a bit higher than the training loss and that the gap between the curves increases. In general it is normal that a neural network shows a better performance
-on the data that it is trained with than on unseen data, but since both curves still show a decreasing behaviour, there is no sign of overtraining. 
-After epoch $352$ the training is ended by the early stopping, so the weights from epoch $277$ are chosen with this results:
+It is evident that the validation loss is slightly higher than the training loss, with an increasing gap between the curves. This indicates the model struggles with generalizing to unseen data:
+Its performance on the training data is clearly better compared to the validation data.
+However both curves still show a decreasing behaviour; increasing curves would have been a clear sign of overtraining.
+Early stopping was triggered after epoch $352$, selecting the weights from epoch $277$ as the best model. The corresponding loss and accuracy values for this model are:
 
 \eqn{
+    \label{eqn:1}
     \mathcal{L} = 0.8888\\
     acc = 0.9162
 }
 
-To evaluate the performance of the MLP further the confusion matric and ROC curves are helpful, for all of these plots the validation data is used with the weights described above.
-For the confusion matrix a threshold of $0.5$ is set, which means that if the highest entry
-of the one-hot encoded prediction is larger than $0.5$ the event is assigned to the corresponding class, otherwise it is not assigned to a class at all. The confusion matrix shows
-how many percent of events of each class are actually predicted to that class and how many events are assigned to what other class. The confusion matrix for the MLP can be seen in Fig. \ref{fig:9}.
+To further evaluate the performance of the MLP, the confusion matrix and ROC curves are informative. All evaluations are performed using the validation data. For the confusion matrix, 
+the class with the highest entry in the MLP's one-hot encoded output is assigned to each event. The matrix indicates the percentage of events correctly classified and those misclassified into other classes.
+The values in each row are normalized to one. The confusion matrix for the MLP is shown in Figure \ref{fig:9}.
 
-\Figure{H}{0.9}{fig:9}{Confusion matrix with a threshhold of $0.5$}{}{content/Plots/performance/cm_plot Kopie.png}
+\Figure{htbp}{0.9}{fig:9}{Confusion matrix}{}{content/Plots/performance/cm_plot Kopie.png}
 
-The plot shows that the non-resonant background could be identified best, followed by the $t \bar{t} H$-background. The model seems to have some difficulty to distinguish
-the two signal classes from each other, this will be studied later in this chapter. Furthermore especially the ggF-class is often misidentified with the $t \bar{t}H$-background, whilst differentiating the VBF class from the $t \bar{t}H$-background seems to work better.
-A possible explanation for that can be found when looking at the feynman graphs of the events, that were presented in Sec. \ref{sec:sig_processes} for the signal and Sec. \ref{sec:bkgproccess} for the background processes. It can be seen that in ggF-events the two Higgs bosons are arbitrary distributed in relation to the beam, as it is for the $t \bar{t}H$-background.
-In the VBF-class by contrast, in two production modes the Higgs bosons is more likely to be radiated into the beam direction, which creates different kinematics for the events. This can be seen in the histogram of the Collins-Soper angle for all four classes (Fig. \ref{fig:13}), where ggF-events
-and $t \bar{t} H$-events are very similarly distributed, in contrast to VBF-events and the non-resonant background.
-Since $t \bar{t} H$-events shows a more similar kinematic to signal events than the non-resonant background, as it was described in Sec. \ref{sec:bkgproccess}, it is expected
-that the non-resonant background can best be differntiated by the MLP.\\ 
+The plot reveals that the non-resonant background is the easiest to identify, followed by the $t \bar{t} H$ background. Since $t \bar{t} H$ events share more kinematic similarities with the signal than
+the non-resonant background (as discussed in Section \ref{sec:bkgproccess}), it is expected that the MLP distinguishes the non-resonant background more effectively. Also, the model has difficulty differentiating between
+the two signal classes, which is anticipated, as both classes represent di-Higgs production modes and therefore share the most similar kinematics.
+Additionally, $8\%$ of ggF events are misclassified as $t \bar{t}H$, compared to only $4.1\%$ of VBF events being misclassified as $t \bar{t}H$. \\
 
-\Figure{H}{0.6}{fig:13}{Collins-Soper angle for all four classes}{}{content/Plots/absCosThetaStar_CS_plot_all.png}
+A potential explanation for this lies in the kinematic distributions of the classes, as discussed in Section \ref{sec
+}. For instance, in the Collins-Soper angle distribution (Fig. \ref{fig:20}), ggF events display a wider distribution of Higgs bosons relative to the beam compared to $t \bar{t}H$ events.
+Conversely, in the VBF class, the Higgs bosons are more likely to be radiated along the beam direction, resulting in different kinematics. Similarly, the $p_T^{\gamma}/m^{\gamma \gamma}$ and
+$p_T^{bb}/m^{\gamma \gamma bb}$ distributions (Fig. \ref{fig:18}) peak at lower values for VBF events than for ggF and $t \bar{t}H$ events, whose energy distributions are more alike.
+The misidentification is influenced by a variety of variables, but these differences in distributions help to explain why the misclassification rate between $t \bar{t}H$ and ggF is higher than between $t \bar{t}H$ and VBF. \\
 
-The ROC-curve shows the True Positive Rate (TPR),
+The ROC curve shows the True Positive Rate (TPR) as a function of the False Positive Rate (FPR). The TPR,
 
 \eqn{
     TPR = \frac{TP}{TP+FN}
 }
 
-where the true positives (TP) are the events that were correctly assigned to the considered class and the false negatives are the events that were falsly assigned to one of the not-considered classes,
-in dependence of the False Positive Rate (FPR),
+is calculated using true positives (TP) — events correctly assigned to the target class — and false negatives (FN), which are events incorrectly assigned to other classes. The FPR,
 
 \eqn{
     FPR = \frac{FP}{FP+TN}
 }
 
-where the false positives are events that were falsly assigned to a specific class and the true negatives are the events that were correctly assigned to a not-considered class.
-The threshhold value at which an event is assigned to a specific class is varied between $0$ and $1$ and for each value and class the TPR and FPR are calculated. Then the area under the curve can be estimated,
-which should be $1$ in a perfect classification. 
+is calculated similarly, where false positives (FP) are events wrongly assigned to a particular class, and true negatives (TN) are correctly assigned events from other classes.
+By varying the threshold for class assignment between $0$ and $1$, TPR and FPR are computed for each threshold and class. The area under the curve (AUC) is then estimated, where an AUC of $1$
+indicates perfect classification. The higher the AUC value, the better the corresponding class can be distinguished from the others.
 
-\Figure{H}{0.8}{fig:10}{ROC one vs. all}{}{content/Plots/performance/roc_plot Kopie.png}
+\Figure{htbp}{0.8}{fig:10}{ROC one vs. all}{}{content/Plots/performance/roc_plot Kopie.png}
 
-In Fig. \ref{fig:10} the one vs. all ROC curve is presented,
-where all events, that do not belong to the considered class are summarized together. The dashed line represents a random classification, where $50 \%$ of the events would be assigned to the considered
-class. It can be observed the same behaviour as in the confusion matrix: The non-resonant background has the largest area under the curve with a value of $0.99$, followed by the $t \bar{t}H$-background with a AUC of $0.98$. For the signal classes these
-values are a little bit lower ($0.94$ for ggF and $0.95$ for VBF).
+Figure \ref{fig:10} shows the ROC curve for the one-vs-all classification, where each class is compared against the remaining classes.
+In binary classification, the dashed line represents random classification, where $50\%$ of events are randomly assigned to the target class. The results follow the same trend as the confusion matrix:
+the non-resonant background has the highest AUC at $0.99$, followed by $t \bar{t}H$ with $0.98$. The signal classes have slightly lower AUC values ($0.94$ for ggF and $0.95$ for VBF). \\
 
 Fig. \ref{fig:11} shows the one vs. one ROC curves for the signal classes vs. each of the background classes, where only the two classes considered are taken into account. 
 
-\Figure{H}{0.8}{fig:11}{ROC one vs. all}{}{content/Plots/performance/combined_roc_curves Kopie.png}
+\Figure{htbp}{0.8}{fig:11}{ROC one vs. all}{}{content/Plots/performance/combined_roc_curves Kopie.png}
 
-Here it can be seen that the two signal classes can better be differentiated from the non-resonant background than from the $t \bar{t}H$-background and again VBF-events are a bit
-better differentiated from the $t \bar{t}H$-background than ggF-events. Finally the model is applied on the test data to evaluate loss and accuracy for completely unseen data, that was not
-involved in the training or hyperparameter optimization. The results of the test data set are
+These plots indicate that both signal classes are better distinguished from the non-resonant background than from the $t \bar{t}H$ background. Additionally, VBF events are more easily distinguished
+from $t \bar{t}H$ than ggF events. Finally, the model was applied to the test data set to evaluate its performance on unseen data that was not involved in the training or hyperparameter optimization.
+The test data results are:
 
 \eqn{
     \mathcal{L} = 0.8886\\
     acc = 0.9144
 }
 
-These results do not vary significantly from the corresponding values of the validation data set. \\
+These values do not vary significantly from the corresponding values of the validation data set (Equation \ref{eqn:1}). \\
 
-As described above the model has some difficulty in differentiating the signal classes from each other and since the signal classes are the ones that are physically interesting it makes
-sense to set the focus on them. To do that, the weights for each event that belongs to a signal class is increased by a constant factor, that will be called 'weight increase' in the following. 
-Weight increases of $2$, $3$, $5$ and $10$ were tested for the model described above. The deciding factor for selecting the best model is the AUC for the signal classes, since this shows
-how good the model can identify the signal classes over all possible threshholds. The following tabular presents the AUC of the ROC one vs. all curves for all weight increases:
+As discussed earlier, the model can identify the background processes better than the signal processes. Since the signal classes are of primary physical interest, the weights for signal
+events are increased in the training process with the aim to improve the identification of the signal classes. Weight increases of $2$, $3$, $5$, and $10$ were tested for the MLP. The key metric for selecting the best
+weight increase is the AUC of the signal classes for both the ROC one vs. all and the ROC one vs. one curve,
+as this reflects how well the model identifies the signal classes across all thresholds. Table \ref{tab:7e} presents the AUC for ROC one vs. all for different weight increases:
+
 
 \Table{H}{tab:7e}{AUC for ROC one vs. all with different weight increases}{}{c c c c c c}{
     \hline
@@ -200,7 +188,7 @@ how good the model can identify the signal classes over all possible threshholds
     \hline
 }
 
-In this tabular the AUC for ROC one vs. one curves are presented
+Additionally, the AUC values for ROC one-vs-one curves with varying weight increases are shown below:
 
 \Table{H}{tab:8e}{AUC for ROC one vs. one with different weight increases}{}{c c c c c c}{
     \hline
@@ -213,23 +201,27 @@ In this tabular the AUC for ROC one vs. one curves are presented
     \hline
 }
 
-\Figure{H}{0.8}{fig:12}{Confusion matrix with a threshhold of $0.5$}{- Weight increase of $3$}{content/Plots/performance/cm_plot3 Kopie.png}
+\Figure{htbp}{0.8}{fig:12}{Confusion matrix}{- Weight increase of $3$}{content/Plots/performance/cm_plot3 Kopie.png}
 
-It can be seen that for weight increases of $5$ and $10$ the perfromance is worse than without a weight increase. For a weight increase of $2$ and $3$ the performance is mostly the same, only
-the non-resonant background can now be a little bit better differentiated from the rest. When looking at the confusion matrix of the weight increase of $3$ (Fig.\ref{fig:12}) it can be seen, that at a threshhold of $0.5$
-the signal classes are better differntiated from the two background classes compared to what can be observed in the confusion matrix without a weight increase (Fig. \ref{fig:9}), but the model does not differentiate the two classes against each other better, which was the original goal.
-Since the AUC-values show only very little difference between these two weight increases it can be said that for higher threshholds even the differentiation between the signal classes and the background classes
-does not improve. The loss, accuracy and ROC-curves for all the described weight increases can be seen in the appendix. To conclude this study it can be said that it does not make a big difference if a weight
-increase of $2$ or $3$ is chosen compared to no weight increase, but the goal to have a better differentiation between the signal classes is not achieved with a weight increase. \\
+It can be observed that for weight increases of $5$ and $10$, the model's performance deteriorates compared to no weight increase. All AUC values for the ROC one-vs-all curves for the signal classes are lower
+for weight increases of $5$ and $10$ than for no weight increase (first column). For weight increases of $2$ and $3$, the performance remains mostly unchanged, though the non-resonant background is slightly better
+distinguished from the other classes, as evidenced by the AUC values for ROC one-vs-one curves comparing signal classes to the non-resonant background. \\
 
-To understand why the two signal events are not well differentiated it makes sense to study how the variables used for training are distributed for the signal events, that were assigned to the wrong signal-class.
-Concretly, histograms of ggF-events assigned as VBF-events and VBF-events assigned as ggF-events are shown, to compare these histograms with those of all ggF-events and all VBF-events. For histograms of the misidentified signal events
-the classification of the validation data set is used. In order for an event to be identified to a specific class a theshhold of $0.5$ is applied. The histograms that show all events are normalized to unity, the histograms of the misidentified signal classes
-are shown as a fraction of all events from the the event's true class.
-In the following these histograms will be presented for the variables that show the most difference between the misidentified events and all events from the considered class.
+The confusion matrix for a weight increase of $3$ (Fig. \ref{fig:12}) shows that signal classes are better separated from the background classes compared to the confusion matrix without any weight
+increase (Fig. \ref{fig:9}). However, the misidentification between the two signal classes is slightly increased. Since the AUC values show only minimal differences between weight increases of $1$ and $3$ for the signal classes,
+it can be
+concluded that at higher thresholds, the distinction between signal and background classes is not signigiccantly improved for a weight increase of $3$. The loss, accuracy, and ROC curves for all weight increases are
+provided in the appendix. In conclusion, applying a weight increase of $2$ or $3$ yields no substantial advantage over not applying any weight increase. The non-resonant background is slightly better
+differentiated from the signal classes, but the misidentification between the signal classes is not improved. \\
 
+To understand why the two signal classes are not well distinguished, it is useful to examine how the variables used as input for the MLP are distributed for signal events that were misclassified.
+Specifically, histograms of ggF events misclassified as VBF events, and vice versa, are shown, comparing these histograms to those of all ggF and VBF events. The misidentified signal events were determined
+using the classification of the validation dataset, applying a threshold of $0.5$ for class assignment. Histograms for all events are normalized to unity, while histograms of the misidentified signal events
+are shown as fractions of the total events from the true class. \\
 
-\begin{figure}[H]
+In the following histograms for selected variables that exhibit the greatest difference between the misclassified events and all events from the true class are presented.
+
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.45\textwidth}
         \centering
@@ -248,13 +240,13 @@ In the following these histograms will be presented for the variables that show 
     \label{fig:combined_roc}
 \end{figure}
 
-First it can be seen that the VBF-events identified as a ggF-event show a very similar distribution of the Collins-Soper angle compared to all ggF-events, the same applies in the other way around.
-The Collins-Soper angle is the angle between the H $\rightarrow \gamma \gamma$ candidate and the beam axis, as described above. In the ggF production mode it is arbitrary in which direction compared to the beam 
-the Higgs boson is radiated. In the VBF production modes on the other hand it can be seen that in two out of three modes the Higgs bosoon is more likely to be radiated into the beam direction. In that case the Collins-
-Soper angle is close to $0$, so the cosinus of this angle is close to one. This is exactly what can be observed in the histograms: If the Higgs boson from a ggF production mode happens to be radiated
-close to the beam direction the model thinks, that it comes originally from a VBF production mode. In the unlikely case that the Higgs boson from the VBF production is radiated in a large angle to the beam the event is misidentified as well.
+First, VBF events misclassified as ggF events show a distribution of the Collins-Soper angle that is quite similar to that of all ggF events, and vice versa. The Collins-Soper angle, which is the angle
+between the Higgs candidate (from $H \rightarrow \gamma \gamma$) and the beam axis as described in Sec. \ref{sec:trainvar}, is more isotropic in ggF production, where the distribution slightly falls in regions with a small angle relative to the beam.
+In contrast, in VBF production, the Higgs boson is more likely to be emitted in the direction of the beam. This means that the Collins-Soper angle is close to zero, and thus its cosine is near one.
+The histograms confirm this observation: when a Higgs boson from ggF production is radiated close to the beam, the model misidentifies it as originating from VBF production. Similarly, in cases where a
+VBF-produced Higgs boson is emitted at a large angle from the beam, the event is misidentified.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.45\textwidth}
         \centering
@@ -273,12 +265,17 @@ close to the beam direction the model thinks, that it comes originally from a VB
     \label{fig:combined_roc}
 \end{figure}
 
-Second it is noticeable how much the $\eta$-distribution of the first VBF-jet of the misidentified signal events differ from the ones from their true class. The explanation for that is quite similar that the one before:
-The VBF-jets are most likely radiated close to the beam direction because these are the jets from the two colliding quarks. In ggF-events the two jets with the highest dijet invariant mass are
-selected as VBF-jets, which can be any two jets. It can be seen that in this class the most VBF-tagged jets are radiated vertically away from the beam, at areas with a larger absolute value of $\eta$ the curve flattens.
-If a true VBF-jet happens to be radiated verically away from the beam or if a VBF-tagged jet of a ggF-events happens to be radiated close to the beam, the events are misidentified.
+% Second it is noticeable how much the $\eta$-distribution of the first VBF-jet of the misidentified signal events differ from the ones from their true class. The explanation for that is quite similar that the one before:
+% The VBF-jets are most likely radiated close to the beam direction because these are the jets from the two colliding quarks. In ggF-events the two jets with the highest dijet invariant mass are
+% selected as VBF-jets, which can be any two jets but the b-tagged ones. It can be seen that in this class the most VBF-tagged jets are radiated vertically away from the beam, at areas with a larger absolute value of $\eta$ the curve flattens.
+% If a true VBF-jet happens to be radiated verically away from the beam or if a VBF-tagged jet of a ggF-events happens to be radiated close to the beam, the events are misidentified.
 
-\begin{figure}[H]
+Second, the $\eta$ distribution of the first VBF-tagged jet in the misclassified events differs noticeably from that in the correctly classified events. As with the Collins-Soper angle,
+this is because VBF jets, which originate from the colliding beam quarks, are more likely to be emitted near the beam. In ggF events, the two jets with the highest dijet invariant mass are selected as
+VBF-tagged jets, which can be any two jets except for the b-tagged ones. It can be seen that in this class most of the VBF-tagged jets tend to be radiated more vertically compared to the beam, with a wider $\eta$ distribution. If a VBF jet is emitted
+further from the beam than usual or a ggF jet is emitted closer to the beam than usual, the event is misclassified. Furthermore a misidentification of the VBF jets in the VBF class can also lead to the observed distribution.
+
+\begin{figure}[htbp]
     \centering
     \begin{subfigure}{0.45\textwidth}
         \centering
@@ -297,12 +294,27 @@ If a true VBF-jet happens to be radiated verically away from the beam or if a VB
     \label{fig:combined_roc}
 \end{figure}
 
-Third it can be observed that the dijet $\frac{p_T^{bb}}{m_{bb \gamma \gamma}}$-variable peaks at a lower range for VBF-events than for ggF-events. This can be explained by looking at the 
-feynman graphs for these two production modes: For the ggF-class, the two gluons which carry the centre of mass-energy fusion into two Higgs bosons, which then carry the full energy. In the VBF
-production mode by contrast the vector bosons are radiated from the beam quarks, which still form high energetic jets after that, so naturally the Higgs bosons from this production mode
-are in a lower energy range as well as the decay products of these Higgs bosons. In the misidentified signal events it can be seen that above average high energetic b-jets originating from a VBF production mode
-are identified as ggF-events and below average low energetic b-jets from the ggF-class are identified as VBF-events. The same behaviour can be observed for the diphoton $\frac{p_T^{\gamma \gamma}}{m_{bb \gamma \gamma}}$-variable,
-as well as for the leading and subleading photon and jet $p_T$s scaled with the diphoton and dijet masses ($\frac{p_T^{\gamma}}{m_{\gamma \gamma}}$ and $\frac{p_T^{b}}{m_{bb}}$).
 
-To sum it up for different kinds of variables it can be clearly observed a difference between the misidentified events and all events from a specific signal class, 
-which provides a good indication of why the model cannot distinguish the signal classes from each other so well.
+Third, it can be observed that the dijet $\frac{p_T^{bb}}{m_{bb \gamma \gamma}}$ variable peaks at a lower range for VBF events compared to ggF events.
+This can be explained by examining the Feynman diagrams for these two production modes. In the ggF process, the two gluons, which carry the center-of-mass energy, fuse directly into two Higgs bosons,
+which then inherit the full energy of the system. In contrast, in the VBF production mode, the vector bosons are radiated from beam quarks, which retain a significant amount of energy and continue to form
+high-energy jets. Consequently, the Higgs bosons produced via VBF, as well as their decay products, generally have lower energy compared to those produced via ggF. Additionally, because the Higgs bosons in
+VBF events tend to be emitted closer to the beam, their transverse momentum ($p_T$) values are naturally smaller. \\
+
+In the misclassified signal events, we observe that VBF events with above-average high-energy b-jets are incorrectly identified as ggF events, while ggF events with below-average low-energy b-jets are
+misclassified as VBF events. This same pattern holds for the diphoton $\frac{p_T^{\gamma \gamma}}{m_{bb \gamma \gamma}}$ variable, as well as for the leading and subleading photon and jet $p_T$ values scaled
+with the diphoton and dijet masses ($\frac{p_T^{\gamma}}{m_{\gamma \gamma}}$ and $\frac{p_T^{b}}{m_{bb}}$). \\
+
+In summary, across various variables, a clear distinction can be observed between misclassified events and correctly classified events from a given signal class. This provides insight into why
+the model struggles to distinguish between the two signal classes effectively. \\
+
+% Third it can be observed that the dijet $\frac{p_T^{bb}}{m_{bb \gamma \gamma}}$-variable peaks at a lower range for VBF-events than for ggF-events. This can be explained by looking at the 
+% feynman graphs for these two production modes: For the ggF class, the two gluons which carry the centre of mass-energy fusion into two Higgs bosons, which then carry the full energy. In the VBF
+% production mode by contrast the vector bosons are radiated from the beam quarks, which still form high energetic jets after that, so naturally the Higgs bosons from this production mode
+% are in a lower energy range as well as the decay products of these Higgs bosons. Furthermore, since the Higgs bosons produced in a VBF production mode are radiated closer to the beam, the $p_T$ values will naturally be ssmaller.
+% In the misidentified signal events it can be seen that above average high energetic b-jets originating from a VBF production mode
+% are identified as ggF-events and below average low energetic b-jets from the ggF-class are identified as VBF-events. The same behaviour can be observed for the diphoton $\frac{p_T^{\gamma \gamma}}{m_{bb \gamma \gamma}}$-variable,
+% as well as for the leading and subleading photon and jet $p_T$s scaled with the diphoton and dijet masses ($\frac{p_T^{\gamma}}{m_{\gamma \gamma}}$ and $\frac{p_T^{b}}{m_{bb}}$).
+
+% To sum it up for different kinds of variables it can be clearly observed a difference between the misidentified events and all events from a specific signal class, 
+% which provides a good indication of why the model cannot distinguish the signal classes from each other so well.
